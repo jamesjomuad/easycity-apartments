@@ -1,0 +1,24 @@
+{
+    "name": "james/easycity-apartments",
+    "type": "wordpress-plugin",
+    "require": {
+        "nesbot/carbon": "^2.41"
+    },
+    "authors": [
+        {
+            "name": "James Jomuad",
+            "email": "james.jomuad@outlook.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "inc/shortcodes.php",
+            "inc/class-easycity.php",
+            "inc/helpers.php",
+            "inc/actions.php",
+            "inc/filters.php",
+            "inc/shortcodes.php",
+            "inc/ajax.php"
+        ]
+    }
+}
