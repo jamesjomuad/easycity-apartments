@@ -19,9 +19,3 @@ define('EASYCITY_URL', plugin_dir_url( __FILE__ ) );
 if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
     require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
-
-// add_action('init',function(){
-//     dd(
-//         view()->partial('map-popup')
-//     );
-// });

@@ -5,7 +5,7 @@
 				<?php
 					// Put initial query here
 					$query = new WP_Query( ['post_type' => 'apartment'] );
-					include('apartment-loop.php') 
+					view('apartment-loop',['query'=>$query])
 				?>
 			</ul>
 			<div id="loader" data-page="2" style="text-align:center;margin:30px 0;">
@@ -31,7 +31,7 @@
 
 <script>
 	function initMap(){
-		var locations = <?php echo json_encode(get_locations()) ?>;
+		var locations = <?php echo json_encode(get_apartments_by_location()) ?>;
 		var $ = jQuery;
 		window.map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 12,
@@ -46,15 +46,28 @@
 		window.htmlContent = function (data) {
 			var content = document.getElementById('mapop').innerHTML;
 			var $html = $(content);
-			var $url = $html.find('a');
-			var $img = $html.find('img');
+			var $img = $html.find('img.featured');
 			var $title = $html.find('.prop-title');
 			var $price = $html.find('.price');
 
 			$title.text(data.address).attr('href','#'+data.mapAddress);
 			$price.text(data.price);
 			$img.attr('src',data.thumb);
-			$url.attr('data-location',data.mapAddress).attr('href','#'+data.mapAddress);
+
+			var $propertyWrap = $html.find('#loc-list');
+			var $properties = $html.find('#loc-list li').clone();
+
+			$html.find('#loc-list li').remove();
+
+			$.each(data.apartments, function(i,data){
+				var apartment = $properties.clone();
+				apartment.find('a').attr('href',data.url);
+				apartment.find('.thumb').attr('src',data.thumb)
+				apartment.find('.price').text(data.price)
+				apartment.find('.title').text(data.title)
+				console.log(data.title)
+				$propertyWrap.append(apartment);
+			});
 
 			return $html[0];
 		}
@@ -80,7 +93,7 @@
 			var g_lat = location.lat
 			var g_long = location.lng
 			var prop_id = location.id
-			var address = location.mapAddress
+			var address = location.address
 			var marker;
 
 			marker = new google.maps.Marker({
@@ -134,7 +147,7 @@
 
 		var bounds = new google.maps.LatLngBounds();
 		$.each(locations, function (i, item) {
-			addHtmlMarker(locations[i])
+			addHtmlMarker(item)
 		});
 		map.fitBounds(bounds);
 	}
