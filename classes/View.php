@@ -71,10 +71,23 @@ class View{
         return ob_get_clean();
     }
 
+    public function partial($name)
+    {
+        $this->set("partials/".$name);
+    }
+
+    public function section($name)
+    {
+        $this->set("sections/".$name);
+    }
+
     public function with(array $variables = [])
     {
         $this->variables = $variables;
         return $this;
     }
 
+    function __destruct() {
+        echo $this->render();
+    }
 }

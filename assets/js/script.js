@@ -172,16 +172,16 @@
 	});
 
 	// Map: location load
-	$(document).on('click','.mapop-content a',function(){
-		$('.apartment_list ul').html('');
-		$('#loader').data('page',1)
-		$('#loader').show()
-		$('#loader .loading').show()
-		getApartments({
-			filter: {
-				google_map: $(this).data('location')
-			}
-		})
-	});
+	// $(document).on('click','.mapop-content a',function(){
+	// 	$('.apartment_list ul').html('');
+	// 	$('#loader').data('page',1)
+	// 	$('#loader').show()
+	// 	$('#loader .loading').show()
+	// 	getApartments({
+	// 		filter: {
+	// 			google_map: $(this).data('location')
+	// 		}
+	// 	})
+	// });
 
 }(jQuery))

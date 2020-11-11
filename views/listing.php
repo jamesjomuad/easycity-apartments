@@ -27,24 +27,7 @@
 
 <div class="spacer"></div>
 
-<!-- Map Popup Template -->
-<div id="mapop" class="col-xs-12 col-sm-6 infowindow_map" style="display: none;">
-	<div class="mapop-content">
-		<a href="#">
-			<img src="" alt="">
-		</a>
-		<div class="result-item__price nosale center col-xs-12">
-			<span class="currency">from $<span class="price"></span>/night</span>
-		</div>
-		<div class="col-xs-12 text-center" style="margin-bottom: 20px;">
-			<div class="col-xs-12 no-padding">
-				<span class="prop_title">
-					<a href="#"><b class="prop-title"></b></a>
-				</span>
-			</div>
-		</div>
-	</div>
-</div>
+<?php view()->partial('map-popup'); ?>
 
 <script>
 	function initMap(){
@@ -160,14 +143,3 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxwPVD6tCrXE9q1qQ889-9VUDkKMGMGn4&callback=initMap"></script>
 
 <?php wp_reset_query(); ?>
-
-<style>
-	.gm-style .gm-style-iw-d{overflow: hidden!important;}
-	.gm-style-iw.gm-style-iw-c{padding: 0;}
-	.mapop-content{text-align: center;}
-	.mapop-content a img { width: 280px; height: 160px; object-fit: cover; }
-	.mapop-content a{display: block;}
-	.mapop-content .currency {display: block;margin: 5px;}
-	.mapop-content .prop_title { font-weight: 600; margin: 5px 0; display: block; max-width: 280px; }
-	.gm-style .gm-style-iw-t::after{top:-1px;}
-</style>
