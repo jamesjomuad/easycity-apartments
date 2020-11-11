@@ -2,7 +2,8 @@
 #
 # Helper Functions
 #
-function add_ajax($name,$callback){
+function add_ajax($name,$callback)
+{
     $fn = function() use($callback) {
         $callback();
         wp_die();
@@ -11,16 +12,26 @@ function add_ajax($name,$callback){
     add_action( 'wp_ajax_nopriv_'.$name, $fn);
 }
 
-function Easycity(){
+function Easycity()
+{
     if(class_exists('EasyCity')){
         return (new EasyCity())->run();
     }
     return null;
 }
 
-function view($name,$variables){
-    if(class_exists('View')){
-        return (new View())->view($name,$variables);
+function view($name=null,$variables=[])
+{
+    if(class_exists('View'))
+    {
+        if($name == null)
+        {
+            return new View;
+        }
+        else
+        {
+            return (new View())->set($name,$variables)->render();
+        }
     }
     return null;
 }

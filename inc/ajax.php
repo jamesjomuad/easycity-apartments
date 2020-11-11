@@ -25,5 +25,5 @@ add_ajax('load_apartments',function(){
 });
 
 add_ajax('map_pop',function(){
-    echo easycity()->view('map-popup');
+    echo view('map-popup');
 });
