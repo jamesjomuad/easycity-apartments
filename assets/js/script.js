@@ -184,11 +184,4 @@
 		})
 	});
 
-	$(document).on("mouseenter", ".apartment_list li", function() {
-		$('#map [title="'+$(this).data('address')+'"]').addClass('pinhover');
-	});
-	$(document).on("mouseleave", ".apartment_list li", function() {
-		$('#map [title="'+$(this).data('address')+'"]').removeClass('pinhover');
-	});
-
 }(jQuery))

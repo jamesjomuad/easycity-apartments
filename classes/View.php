@@ -77,9 +77,4 @@ class View{
         return $this;
     }
 
-    public function __destruct()
-    {
-        echo $this->render();
-    }
-    
 }
