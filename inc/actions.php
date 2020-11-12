@@ -106,6 +106,10 @@ add_action('init',function(){
   {
     $locations = [];
 
+    $monetize = function($amount){
+      return '$'.number_format($amount);
+    };
+
     $result = new WP_Query([
         'post_type'       => 'apartment',
         'posts_per_page'  => -1
@@ -116,15 +120,16 @@ add_action('init',function(){
     {
         $gmap = get_field('google_map',$post->ID);
         $locations[$gmap['address']][$key] = [
-            'price'       => number_format(get_field('price',$post->ID)),
-            'thumb'       => get_the_post_thumbnail_url($post),
-            'address'     => get_field('address',$post->ID),
-            'mapAddress'  => $gmap['address'],
-            'lat'         => (float) $gmap['lat'],
-            'lng'         => (float) $gmap['lng'],
-            'title'       => $post->post_title,
-            'url'         => get_post_permalink($post->ID),
-            'id'          => $post->ID
+          'priceInt'   => (int)get_field('price',$post->ID),
+          'price'      => $monetize(get_field('price',$post->ID)),
+          'thumb'      => get_the_post_thumbnail_url($post),
+          'address'    => get_field('address',$post->ID),
+          'mapAddress' => $gmap['address'],
+          'lat'        => (float) $gmap['lat'],
+          'lng'        => (float) $gmap['lng'],
+          'title'      => $post->post_title,
+          'url'        => get_post_permalink($post->ID),
+          'id'         => $post->ID
         ];
     }
 
@@ -133,18 +138,27 @@ add_action('init',function(){
     foreach($locations as $key=>$item)
     {
       $loc = array_values($item);
+      $minMaxPrice = count($loc)>1 ? 
+        $monetize(min(array_column($loc, 'priceInt'))).'-'.$monetize(min(array_column($loc, 'priceInt'))) :
+        $monetize($loc[0]['priceInt'])
+      ;
       $formated[] = [
         'address'    => $key,
         'id'         => $loc[0]['id'],
         'lat'        => $loc[0]['lat'],
         'lng'        => $loc[0]['lng'],
         'thumb'      => $loc[0]['thumb'],
-        'pricesRange'=> '$8,888.00-$8,888.00',
+        'priceRange'=> $minMaxPrice,
         'apartments' => array_values($loc)
       ];
     }
 
     return $formated;
   }
+
+  // if(isset($_GET['debug']))
+  // dd(
+  //   get_apartments_by_location()
+  // );
 
 },10);

@@ -48,10 +48,10 @@
 			var $html = $(content);
 			var $img = $html.find('img.featured');
 			var $title = $html.find('.prop-title');
-			var $price = $html.find('.price');
+			var $priceRange = $html.find('.price-range');
 
 			$title.text(data.address).attr('href','#'+data.mapAddress);
-			$price.text(data.price);
+			$priceRange.text(data.priceRange);
 			$img.attr('src',data.thumb);
 
 			var $propertyWrap = $html.find('#loc-list');

@@ -2,9 +2,9 @@
 <div id="mapop" class="col-xs-12 col-sm-6 infowindow_map" style="display: none;">
     <div class="mapop-content">
         <img class="featured" src="">
-        <!-- <div class="result-item__price nosale center col-xs-12">
-            <span class="currency">from $<span class="price"></span>/night</span>
-        </div> -->
+        <div class="result-item__price nosale center col-xs-12">
+            <span class="currency">from <span class="price-range"></span>/night</span>
+        </div>
         <div class="col-xs-12 text-center" style="margin-bottom: 20px;">
             <div class="col-xs-12 no-padding">
                 <span class="prop_title">
@@ -38,7 +38,6 @@
 
     #loc-list::-webkit-scrollbar{width:9px;height:9px}
     #loc-list::-webkit-scrollbar-thumb{background:linear-gradient(13deg,#F44932 14%,#f44932 64%);border-radius:10px}
-    #loc-list::-webkit-scrollbar-thumb:hover{background:linear-gradient(13deg,#c7ceff 14%,#f9d4ff 64%)}
     #loc-list::-webkit-scrollbar-track{background:#fff;border-radius:10px;box-shadow:inset 7px 10px 12px #f0f0f0}
     #loc-list{height:140px;background:#f0f0f0;overflow-y:auto;list-style:none;margin:5px 0}
     #loc-list li{background:#fff;margin:10px 5px;border-radius:3px;overflow:hidden}
