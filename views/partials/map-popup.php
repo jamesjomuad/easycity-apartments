@@ -43,7 +43,7 @@
     #loc-list li{background:#fff;margin:10px 5px;border-radius:3px;overflow:hidden}
     #loc-list a,#loc-list a div{display:flex;flex-direction:row;flex-wrap:wrap}
     #loc-list a div{width:133px;position: relative;}
-    #loc-list a img{max-width:100px;height:auto;margin-right:10px;object-fit:cover}
+    #loc-list a img { width: 100px; height: 75px; margin-right: 10px; object-fit: cover; }
     #loc-list li label { font-weight: 500; margin: 10px 0 10px 0px; height: auto; width: 100%; text-align: left; font-size: 11px; cursor: pointer; }
     #loc-list li small { width: 56px; margin: 10px 0; height: 20px; background: #F44932; color: #fff; padding: 4px 5px; border-radius: 18px; position: absolute; margin-left: -70px; margin-top: 5px; }
 </style>
