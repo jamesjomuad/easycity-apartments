@@ -21,7 +21,7 @@ add_ajax('load_apartments',function(){
         $args['meta_query'] = $meta_query;
     }
 
-    echo view('apartment-loop',['query' => new WP_Query($args)]);
+    view('apartment-loop',['query' => new WP_Query($args)]);
 });
 
 add_ajax('map_pop',function(){

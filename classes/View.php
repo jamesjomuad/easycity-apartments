@@ -92,7 +92,8 @@ class View{
         return $this;
     }
 
-    function __destruct() {
+    function __destruct()
+    {
         if($this->hasRendered==false)
         echo $this->render();
     }

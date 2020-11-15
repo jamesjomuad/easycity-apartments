@@ -2,24 +2,27 @@
 #
 # Action Hooks
 #
-add_action( 'wp_enqueue_scripts', function() {
-	wp_register_style( 'fontawesome', EASYCITY_URL.'/assets/css/all.min.css');
-	wp_enqueue_style( 'fontawesome' );
-
-	wp_register_style( 'childstyle', EASYCITY_URL.'/assets/css/style.css');
-  wp_enqueue_style( 'childstyle' );
+// add_action( 'wp_enqueue_scripts', function() {
+//   wp_register_style( 'fontawesome', EASYCITY_URL.'/assets/css/bulma.min.css');
+//   wp_enqueue_style( 'fontawesome' );
   
-  wp_register_script('scrollspy', EASYCITY_URL.'/assets/js/scrollspy.js', array('jquery'),'1.1', true);
-  wp_enqueue_script('scrollspy');
+// 	wp_register_style( 'fontawesome', EASYCITY_URL.'/assets/css/all.min.css');
+// 	wp_enqueue_style( 'fontawesome' );
+
+// 	wp_register_style( 'childstyle', EASYCITY_URL.'/assets/css/style.css');
+//   wp_enqueue_style( 'childstyle' );
   
-  wp_register_script('jquery.sticky', EASYCITY_URL.'/assets/js/jquery.sticky.js', array('jquery'),'1.1', true);
-	wp_enqueue_script('jquery.sticky');
+//   wp_register_script('scrollspy', EASYCITY_URL.'/assets/js/scrollspy.js', array('jquery'),'1.1', true);
+//   wp_enqueue_script('scrollspy');
+  
+//   wp_register_script('jquery.sticky', EASYCITY_URL.'/assets/js/jquery.sticky.js', array('jquery'),'1.1', true);
+// 	wp_enqueue_script('jquery.sticky');
 
-	wp_register_script('childscript', EASYCITY_URL.'/assets/js/script.js', array('jquery'),'1.1', true);
-	wp_enqueue_script('childscript');
+// 	wp_register_script('childscript', EASYCITY_URL.'/assets/js/script.js', array('jquery'),'1.1', true);
+// 	wp_enqueue_script('childscript');
 
-	wp_dequeue_script('google_map_api');
-}, 11);
+// 	wp_dequeue_script('google_map_api');
+// }, 11);
 
 add_action( 'init', function() {
   register_post_type( 'apartment',
@@ -155,5 +158,4 @@ add_action('init',function(){
 
     return $formated;
   }
-
 },10);

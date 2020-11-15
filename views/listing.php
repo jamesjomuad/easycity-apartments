@@ -1,3 +1,5 @@
+<?php view()->section('search-form'); ?>
+
 <div class="ec_apartments">
 	<div class="apartment_list_wrap">
 		<div class="apartment_list">
@@ -27,9 +29,7 @@
 
 <div class="spacer"></div>
 
-<?php 
-	view()->partial('map-popup');
-?>
+<?php view()->partial('map-popup');  ?>
 
 <script>
 	function initMap(){
