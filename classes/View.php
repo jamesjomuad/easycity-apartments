@@ -83,7 +83,7 @@ class View{
     public function section($name)
     {
         $this->hasRendered = false;
-        return $this->set("partials/".$name)->render();
+        return $this->set("sections/".$name)->render();
     }
 
     public function with(array $variables = [])
