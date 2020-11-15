@@ -11,15 +11,6 @@
         }
     ],
     "autoload": {
-        "classmap": ["classes"],
-        "files": [
-            "EasyCity.php",
-            "library/shortcodes.php",
-            "library/functions.php",
-            "library/actions.php",
-            "library/filters.php",
-            "library/shortcodes.php",
-            "library/ajax.php"
-        ]
+        "classmap": ["classes"]
     }
 }
