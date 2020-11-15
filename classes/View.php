@@ -1,13 +1,14 @@
 <?php
 
 class View{
-    private $path       = EASYCITY_DIR.'/views/';
-    private $extensions = ['php','html','htm'];
-    private $template   = null;
-    private $name       = null;
-    private $variables  = [];
-    private $view       = null;
-    
+    private $path        = EASYCITY_DIR.'/views/';
+    private $extensions  = ['php','html','htm'];
+    private $template    = null;
+    private $name        = null;
+    private $variables   = [];
+    private $view        = null;
+    private $hasRendered = false;
+    public $isExist      = false;
 
     public function setPath($path)
     {
@@ -49,6 +50,7 @@ class View{
             $templatePath = $this->path.$name.'.'.$extension;
             if(file_exists( $templatePath ))
             {
+                $this->isExist = true;
                 $this->template = $name.'.'.$extension;
                 $this->view = $templatePath;
                 break;
@@ -66,6 +68,7 @@ class View{
     public function render()
     {
         extract($this->variables);
+        $this->hasRendered = true;
         ob_start();
         include $this->view;
         return ob_get_clean();
@@ -73,7 +76,8 @@ class View{
 
     public function partial($name)
     {
-        $this->set("partials/".$name);
+        $this->hasRendered = false;
+        return $this->set("partials/".$name)->render();
     }
 
     public function section($name)
@@ -88,6 +92,7 @@ class View{
     }
 
     function __destruct() {
+        if($this->hasRendered)
         echo $this->render();
     }
 }

@@ -139,7 +139,7 @@ add_action('init',function(){
     {
       $loc = array_values($item);
       $minMaxPrice = count($loc)>1 ? 
-        $monetize(min(array_column($loc, 'priceInt'))).'-'.$monetize(min(array_column($loc, 'priceInt'))) :
+        $monetize(min(array_column($loc, 'priceInt'))).'-'.$monetize(max(array_column($loc, 'priceInt'))) :
         $monetize($loc[0]['priceInt'])
       ;
       $formated[] = [
@@ -155,10 +155,5 @@ add_action('init',function(){
 
     return $formated;
   }
-
-  // if(isset($_GET['debug']))
-  // dd(
-  //   get_apartments_by_location()
-  // );
 
 },10);
