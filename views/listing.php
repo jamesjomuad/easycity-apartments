@@ -27,7 +27,9 @@
 
 <div class="spacer"></div>
 
-<?php view()->partial('map-popup'); ?>
+<?php 
+	view()->partial('map-popup');
+?>
 
 <script>
 	function initMap(){

@@ -26,7 +26,7 @@ function view($name=null,$variables=[])
     {
         if($name == null)
         {
-            return new View;
+            return new View();
         }
         else
         {
