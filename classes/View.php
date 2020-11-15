@@ -44,6 +44,7 @@ class View{
 
         $this->name = $name;
         $this->variables = $variables;
+        $this->hasRendered = false;
 
         foreach($this->extensions as $extension)
         {
@@ -71,19 +72,18 @@ class View{
         extract($this->variables);
         ob_start();
         include $this->view;
-        return ob_get_clean();
+        echo ob_get_clean();
+        return $this;
     }
 
     public function partial($name)
     {
-        echo $this->set("partials/".$name)->render();
-        return $this;
+        return $this->set("partials/".$name)->render();
     }
 
     public function section($name)
     {
-        echo $this->set("sections/".$name)->render();
-        return $this;
+        return $this->set("sections/".$name)->render();
     }
 
     public function with(array $variables = [])
