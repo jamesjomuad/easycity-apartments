@@ -67,8 +67,8 @@ class View{
 
     public function render()
     {
-        extract($this->variables);
         $this->hasRendered = true;
+        extract($this->variables);
         ob_start();
         include $this->view;
         return ob_get_clean();
@@ -76,14 +76,14 @@ class View{
 
     public function partial($name)
     {
-        $this->hasRendered = false;
-        return $this->set("partials/".$name)->render();
+        echo $this->set("partials/".$name)->render();
+        return $this;
     }
 
     public function section($name)
     {
-        $this->hasRendered = false;
-        return $this->set("sections/".$name)->render();
+        echo $this->set("sections/".$name)->render();
+        return $this;
     }
 
     public function with(array $variables = [])
@@ -93,7 +93,7 @@ class View{
     }
 
     function __destruct() {
-        if($this->hasRendered)
+        if($this->hasRendered==false)
         echo $this->render();
     }
 }
