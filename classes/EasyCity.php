@@ -8,9 +8,12 @@ class EasyCity{
     public $plugin_url;
     public $css_url;
     public $js_url;
-    public $css = [];
-    public $js = [];
-
+    protected $register = [
+        'css' => [],
+        'js' => [],
+        'wp_register_style' => [],
+        'wp_register_script' => [],
+    ];
 
     public function __construct()
     {
@@ -51,7 +54,7 @@ class EasyCity{
     private function load_css()
     {
         add_action( 'wp_enqueue_scripts', function() {
-            foreach($this->css as $name=>$css)
+            foreach($this->register['css'] as $name=>$css)
             {
                 if(is_int($name))
                 {
@@ -75,7 +78,7 @@ class EasyCity{
     private function load_js()
     {
         add_action( 'wp_enqueue_scripts', function() {
-            foreach($this->js as $name=>$js)
+            foreach( $this->register['js'] as $name=>$js)
             {
                 if(is_int($name))
                 {
@@ -96,17 +99,45 @@ class EasyCity{
         return $this;
     }
 
+    private function init_register()
+    {
+        add_action( 'wp_enqueue_scripts', function() {
+            foreach($this->register['wp_register_style'] as $key=>$css)
+            {
+                $path = $this->css_url . $css;
+                wp_register_style( $key, $path);
+            }
+
+            foreach($this->register['wp_register_script'] as $key=>$js)
+            {
+                $path = $this->js_url . $js;
+                wp_register_style( $key, $path);
+            }
+        }, 11);
+    }
+
+    public function registerCss($name, $cssPath)
+    {
+        $this->register['wp_register_style'][$name] = $cssPath;
+        return $this;
+    }
+
+    public function registerJs($name, $jsPath)
+    {
+        $this->register['wp_register_script'][$name] = $jsPath;
+        return $this;
+    }
+
     public function addCss($css,$name = null)
     {
         if($name==null)
         {
-            $this->css[] = $css;
+            $this->register['css'][] = $css;
         }
         else
         {
-            $this->css[$name] = $css;
+            $this->register['css'][$name] = $css;
         }
-        
 
         return $this;
     }
@@ -115,11 +146,11 @@ class EasyCity{
     {
         if($name==null)
         {
-            $this->js[] = $js;
+            $this->register['js'][] = $js;
         }
         else
         {
-            $this->js[$name] = $js;
+            $this->register['js'][$name] = $js;
         }
 
         return $this;
@@ -132,6 +163,8 @@ class EasyCity{
         $this->load_js();
 
         $this->load_hooks();
+
+        $this->init_register();
 
         return $this;
     }
