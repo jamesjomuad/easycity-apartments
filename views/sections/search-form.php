@@ -1,3 +1,10 @@
+<p>
+	<label for="amount">Price range:</label>
+	<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider-range"></div>
+
 <form action="" method="post">
     <div class="container-fluid has-background-white box p-5 mb-6">
         <div class="columns is-desktop">
@@ -96,3 +103,5 @@
         </div>
     </div>
 </form>
+
+
