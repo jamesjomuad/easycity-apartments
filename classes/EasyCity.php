@@ -35,19 +35,19 @@ class EasyCity{
     private function load_hooks()
     {
 
-        require_once $this->plugin_dir . "/library/functions.php";
+        require_once $this->plugin_dir . "/hooks/functions.php";
 
-        require_once $this->plugin_dir . "/library/enqueue_scripts.php";
+        require_once $this->plugin_dir . "/hooks/enqueue_scripts.php";
 
-        require_once $this->plugin_dir . "/library/shortcodes.php";
+        require_once $this->plugin_dir . "/hooks/shortcodes.php";
 
-        require_once $this->plugin_dir . "/library/actions.php";
+        require_once $this->plugin_dir . "/hooks/actions.php";
 
-        require_once $this->plugin_dir . "/library/filters.php";
+        require_once $this->plugin_dir . "/hooks/filters.php";
 
-        require_once $this->plugin_dir . "/library/shortcodes.php";
+        require_once $this->plugin_dir . "/hooks/shortcodes.php";
 
-        require_once $this->plugin_dir . "/library/ajax.php";
+        require_once $this->plugin_dir . "/hooks/ajax.php";
 
     }
 
@@ -84,14 +84,14 @@ class EasyCity{
                 {
                     $name = pathinfo($js, PATHINFO_FILENAME);
                     $path = $this->js_url . $js;
-                    wp_register_script('EC_js_'.$name, $path);
-                    wp_enqueue_script('EC_js_'.$name);
+                    wp_register_script('EC_js_'.$name, $path,'','',true);
+                    wp_enqueue_script('EC_js_'.$name,'','',true);
                 }
                 else
                 {
                     $path = $this->css_url . $css;
-                    wp_register_style( 'EC_js_'.$name, $path);
-                    wp_enqueue_style( 'EC_js_'.$name );
+                    wp_register_style( 'EC_js_'.$name, $path,'','',true);
+                    wp_enqueue_script( 'EC_js_'.$name,'','',true);
                 }
             }
         }, 11);
@@ -164,7 +164,7 @@ class EasyCity{
 
         $this->load_hooks();
 
-        $this->init_register();
+        // $this->init_register();
 
         return $this;
     }

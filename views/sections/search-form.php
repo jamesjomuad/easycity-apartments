@@ -26,7 +26,7 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-2">
+            <div class="column is-1">
                 <div class="field">
                     <label class="label">Room</label>
                     <div class="control is-expanded">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-2">
+            <div class="column is-1">
                 <div class="field">
                     <label class="label">Type</label>
                     <div class="control is-expanded">
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-2">
+            <div class="column is-1">
                 <div class="field">
                     <label class="label">Bath</label>
                     <div class="control is-expanded">
@@ -81,6 +81,17 @@
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- column -->
+            <div class="column is-3">
+                <div class="field">
+                    <label class="label">Price: <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;"></label>
+                    <div class="control is-expanded">
+                        <div class="is-fullwidth">
+                            <div id="slider-range" style="margin-top:20px;"></div>
                         </div>
                     </div>
                 </div>
@@ -96,3 +107,5 @@
         </div>
     </div>
 </form>
+
+
