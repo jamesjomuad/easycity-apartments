@@ -22,7 +22,7 @@
                 <div class="field">
                     <label class="label">Check In</label>
                     <p class="control has-icons-left">
-                        <input class="input" type="email" placeholder="Check In">
+                        <input id="checkIn" class="input" type="date" placeholder="Check In">
                         <span class="icon is-small is-left">
                             <i class="fas fa-calendar"></i>
                         </span>
@@ -34,7 +34,7 @@
                 <div class="field">
                     <label class="label">Check Out</label>
                     <p class="control has-icons-left">
-                        <input class="input" type="email" placeholder="Check Out">
+                        <input id="checkOut" class="input" type="date" placeholder="Check Out">
                         <span class="icon is-small is-left">
                             <i class="fas fa-calendar"></i>
                         </span>

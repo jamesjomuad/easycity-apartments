@@ -176,6 +176,7 @@
 		$('#ec-filter').on('click', function(){
 			$('#ec-filter-panel').toggleClass('is-hidden')
 		});
+		
 		$( "#slider-range" ).slider();
 		$( "#slider-range" ).slider({
 			range: true,
@@ -186,7 +187,22 @@
 				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 			}
 		});
+		
 		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+		
+		var datepicker = bulmaCalendar.attach('[type="date"]', {
+			type: 'datetime',
+			showFooter: false,
+			displayMode: 'default'
+		});
+
+		$('#checkIn').on('click',function(){
+			datepicker[1].hide()
+		});
+		$('#checkOut').on('click',function(){
+			datepicker[0].hide()
+		});
+
 	});
 
 }(jQuery))

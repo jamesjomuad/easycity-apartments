@@ -133,12 +133,12 @@ add_action('wp_enqueue_scripts', function(){
   if ( $post->post_type == 'apartment' )
   {
     wp_enqueue_style('ec_bulma');
-    wp_enqueue_style( 'ec_all');
-    wp_enqueue_style( 'ec_jquery-ui');
-    wp_enqueue_style( 'ec_style');
-    wp_enqueue_script( 'ec_scrollspy');
-    wp_enqueue_script( 'ec_jquery-ui');
-    wp_enqueue_script( 'ec_jquery');
-    wp_enqueue_script( 'ec_script');
+    wp_enqueue_style('ec_all');
+    wp_enqueue_style('ec_jquery-ui');
+    wp_enqueue_style('ec_style');
+    wp_enqueue_script('ec_scrollspy');
+    wp_enqueue_script('ec_jquery-ui');
+    wp_enqueue_script('ec_jquery');
+    wp_enqueue_script('ec_script');
   }
 },99);
