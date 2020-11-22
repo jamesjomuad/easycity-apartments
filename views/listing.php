@@ -1,3 +1,5 @@
+<?php view()->section('search-form'); ?>
+
 <div class="ec_apartments">
 	<div class="apartment_list_wrap">
 		<div class="apartment_list">
@@ -27,9 +29,7 @@
 
 <div class="spacer"></div>
 
-<?php 
-	view()->partial('map-popup');
-?>
+<?php view()->partial('map-popup');  ?>
 
 <script>
 	function initMap(){
@@ -67,7 +67,6 @@
 				apartment.find('.thumb').attr('src',data.thumb)
 				apartment.find('.price').text(data.price)
 				apartment.find('.title').text(data.title)
-				console.log(data.title)
 				$propertyWrap.append(apartment);
 			});
 
