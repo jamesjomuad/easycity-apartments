@@ -53,14 +53,22 @@
             <div class="column">
                 <div class="is-grouped mt-5 pt-2">
                     <p class="control">
-                        <a id="search" class="button has-text-white is-fullwidth" style="background: #F44932;border: none;">Search</a>
+                        <a id="ec-search" class="button has-text-white is-fullwidth" style="background: #F44932;border: none;">Search</a>
+                    </p>
+                </div>
+            </div>
+            <!-- colum -->
+            <div class="column is-1">
+                <div class="is-grouped mt-5 pt-2">
+                    <p class="control">
+                        <a id="ec-filter" class="button is-fullwidth is-dark">Filter</a>
                     </p>
                 </div>
             </div>
         </div>
 
         <!-- More filters -->
-        <div class="columns is-desktop box mt-5 is-hidden">
+        <div id="ec-filter-panel" class="columns is-desktop box mt-5 is-hidden">
             <!-- column -->
             <div class="column is-2">
                 <div class="field">
@@ -122,7 +130,7 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-3">
+            <div class="column">
                 <div class="field">
                     <label class="label">Price: <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;"></label>
                     <div class="control is-expanded">

@@ -171,7 +171,11 @@
 		}).scrollSpy();
 	});
 
+	// Search Filter
 	$(document).on('ready', function(){
+		$('#ec-filter').on('click', function(){
+			$('#ec-filter-panel').toggleClass('is-hidden')
+		});
 		$( "#slider-range" ).slider();
 		$( "#slider-range" ).slider({
 			range: true,

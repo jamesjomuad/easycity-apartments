@@ -12,14 +12,6 @@ function add_ajax($name,$callback)
     add_action( 'wp_ajax_nopriv_'.$name, $fn);
 }
 
-function Easycity()
-{
-    if(class_exists('EasyCity')){
-        return (new EasyCity())->run();
-    }
-    return null;
-}
-
 function view($name=null,$variables=[])
 {
     if(class_exists('View'))
