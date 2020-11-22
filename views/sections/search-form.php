@@ -8,18 +8,10 @@
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select>
-                                <option value="Argentina">Argentina</option>
-                                <option value="Bolivia">Bolivia</option>
-                                <option value="Brazil">Brazil</option>
-                                <option value="Chile">Chile</option>
-                                <option value="Colombia">Colombia</option>
-                                <option value="Ecuador">Ecuador</option>
-                                <option value="Guyana">Guyana</option>
-                                <option value="Paraguay">Paraguay</option>
-                                <option value="Peru">Peru</option>
-                                <option value="Suriname">Suriname</option>
-                                <option value="Uruguay">Uruguay</option>
-                                <option value="Venezuela">Venezuela</option>
+                                <option value="0">Select</option>
+                                <?php foreach($locations as $location) : ?>
+                                    <option value="<?php echo $location ?>"><?php echo $location ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -68,7 +60,7 @@
         </div>
 
         <!-- More filters -->
-        <div id="ec-filter-panel" class="columns is-desktop box mt-5 has-background-light">
+        <div id="ec-filter-panel" class="columns is-desktop is-hidden box mt-5 has-background-light">
             <!-- column -->
             <div class="column is-2">
                 <div class="field">
@@ -146,5 +138,3 @@
         </div>
     </div>
 </form>
-
-

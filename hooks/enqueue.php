@@ -6,7 +6,7 @@ $this
     ->registerCss( 'ec_jquery-ui', 'jquery-ui.css')
     ->registerCss( 'ec_style', 'style.css')
     ->registerJs( 'ec_scrollspy', 'scrollspy.js')
-    ->registerJs( 'ec_jquery_sticky', 'jquery.sticky.js')
-    ->registerJs( 'ec_jquery', 'jquery-ui.js')
+    ->registerJs( 'ec_jquery', 'jquery.sticky.js')
+    ->registerJs( 'ec_jquery-ui', 'jquery-ui.js')
     ->registerJs( 'ec_script', 'script.js')
 ;

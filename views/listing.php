@@ -1,4 +1,6 @@
-<?php view()->section('search-form'); ?>
+<?php 
+	view()->section('search-form',['locations' => get_locations()]);
+?>
 
 <div class="ec_apartments">
 	<div class="apartment_list_wrap">

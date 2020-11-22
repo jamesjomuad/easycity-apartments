@@ -124,10 +124,6 @@ add_action('init',function(){
 
         return $formated;
     }
-
-    dd(
-        get_locations()
-    );
 },10);
 
 add_action('wp_enqueue_scripts', function(){
@@ -141,7 +137,7 @@ add_action('wp_enqueue_scripts', function(){
     wp_enqueue_style( 'ec_jquery-ui');
     wp_enqueue_style( 'ec_style');
     wp_enqueue_script( 'ec_scrollspy');
-    wp_enqueue_script( 'ec_jquery');
+    wp_enqueue_script( 'ec_jquery-ui');
     wp_enqueue_script( 'ec_jquery');
     wp_enqueue_script( 'ec_script');
   }
