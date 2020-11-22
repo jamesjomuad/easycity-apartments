@@ -10,14 +10,3 @@ $this
     ->registerJs( 'ec_jquery', 'jquery-ui.js')
     ->registerJs( 'ec_script', 'script.js')
 ;
-
-// $this
-//     ->addCss('bulma.min.css')
-//     ->addCss('all.min.css')
-//     ->addCss('jquery-ui.css')
-//     ->addCss('style.css')
-//     ->addJs('scrollspy.js')
-//     ->addJs('jquery.sticky.js')
-//     ->addJs('jquery-ui.js')
-//     ->addJs('script.js')
-// ;

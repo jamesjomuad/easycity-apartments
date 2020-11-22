@@ -68,7 +68,7 @@
         </div>
 
         <!-- More filters -->
-        <div id="ec-filter-panel" class="columns is-desktop box mt-5 is-hidden">
+        <div id="ec-filter-panel" class="columns is-desktop box mt-5 has-background-light">
             <!-- column -->
             <div class="column is-2">
                 <div class="field">
@@ -132,7 +132,10 @@
             <!-- column -->
             <div class="column">
                 <div class="field">
-                    <label class="label">Price: <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;"></label>
+                    <label class="label">
+                        Price: 
+                        <input type="text" id="amount" readonly style="border:0;color: #F44932;font-weight:bold;background:none;">
+                    </label>
                     <div class="control is-expanded">
                         <div class="is-fullwidth">
                             <div id="slider-range" style="margin-top:20px;"></div>
