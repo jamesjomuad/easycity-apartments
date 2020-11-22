@@ -9,7 +9,7 @@ add_shortcode( 'apartments', function ( $atts ){
     $this->css( 'ec_style');
     $this->js( 'ec_scrollspy');
     $this->js( 'ec_jquery');
-    $this->js( 'ec_jquery');
+    $this->js( 'ec_jquery_sticky');
     $this->js( 'ec_script');
 
     view('listing');

@@ -31,6 +31,7 @@ function view($name=null,$variables=[])
         else
         {
             return (new View())->set($name,$variables)->render();
+            // return (new View())->set($name,$variables)->render();
         }
     }
     return null;

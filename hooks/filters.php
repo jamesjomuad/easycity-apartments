@@ -16,11 +16,17 @@ add_filter( 'post_type_link', function( $post_link, $post, $leavename ) {
 add_filter('single_template', function($single) {
     global $post;
 
-    $template_path = EASYCITY_DIR . '\views\apartment-single.php';
+    $template_path = EASYCITY_DIR . '/views/apartment-single.php';
+
+    
 
     /* Checks for single template by post type */
     if ( $post->post_type == 'apartment' ) {
         if ( file_exists($template_path) ) {
+            if(isset($_GET['debug']))
+            {
+                echo $template_path;
+            }
             return $template_path;
         }
     }
