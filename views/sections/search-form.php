@@ -26,7 +26,43 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-1">
+            <div class="column is-3">
+                <div class="field">
+                    <label class="label">Check In</label>
+                    <p class="control has-icons-left">
+                        <input class="input" type="email" placeholder="Check In">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-calendar"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- column -->
+            <div class="column is-3">
+                <div class="field">
+                    <label class="label">Check Out</label>
+                    <p class="control has-icons-left">
+                        <input class="input" type="email" placeholder="Check Out">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-calendar"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- colum -->
+            <div class="column">
+                <div class="is-grouped mt-5 pt-2">
+                    <p class="control">
+                        <a id="search" class="button has-text-white is-fullwidth" style="background: #F44932;border: none;">Search</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- More filters -->
+        <div class="columns is-desktop box mt-5 is-hidden">
+            <!-- column -->
+            <div class="column is-2">
                 <div class="field">
                     <label class="label">Room</label>
                     <div class="control is-expanded">
@@ -48,7 +84,7 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-1">
+            <div class="column is-2">
                 <div class="field">
                     <label class="label">Type</label>
                     <div class="control is-expanded">
@@ -70,7 +106,7 @@
                 </div>
             </div>
             <!-- column -->
-            <div class="column is-1">
+            <div class="column is-2">
                 <div class="field">
                     <label class="label">Bath</label>
                     <div class="control is-expanded">
@@ -94,14 +130,6 @@
                             <div id="slider-range" style="margin-top:20px;"></div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- colum -->
-            <div class="column">
-                <div class="is-grouped mt-5 pt-2">
-                    <p class="control">
-                        <a class="button has-text-white is-fullwidth" style="background: #F44932;border: none;">Search</a>
-                    </p>
                 </div>
             </div>
         </div>

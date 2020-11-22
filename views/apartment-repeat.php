@@ -11,7 +11,7 @@
             <h3><?php the_title(); ?></h3>
             <p><?php the_field('address'); ?></p>
             <div class="divider"></div>
-            <div class="features">
+            <div class="features has-text-grey">
                 <span class="bed"><i class="fa fa-bed"></i> <?php the_field('room'); ?> Room</span>
                 <span class="bath"><i class="fa fa-bath"></i> <?php the_field('baths'); ?> Bath</span>
                 <span class="size"><i class="fa fa-ruler-combined"></i> <?php the_field('area'); ?> sqft</span>

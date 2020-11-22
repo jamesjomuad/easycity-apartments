@@ -67,7 +67,6 @@
 				apartment.find('.thumb').attr('src',data.thumb)
 				apartment.find('.price').text(data.price)
 				apartment.find('.title').text(data.title)
-				console.log(data.title)
 				$propertyWrap.append(apartment);
 			});
 

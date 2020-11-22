@@ -37,7 +37,7 @@ class EasyCity{
 
         require_once $this->plugin_dir . "/hooks/functions.php";
 
-        require_once $this->plugin_dir . "/hooks/enqueue_scripts.php";
+        require_once $this->plugin_dir . "/hooks/enqueue.php";
 
         require_once $this->plugin_dir . "/hooks/shortcodes.php";
 
@@ -99,6 +99,7 @@ class EasyCity{
         return $this;
     }
 
+    # wp_register_style and wp_register_script
     private function init_register()
     {
         add_action( 'wp_enqueue_scripts', function() {
@@ -111,23 +112,38 @@ class EasyCity{
             foreach($this->registers['wp_register_script'] as $key=>$js)
             {
                 $path = $this->js_url . $js;
-                wp_register_style( $key, $path);
+                wp_register_script( $key, $path,'','',true);
             }
         }, 11);
     }
 
+    # Register CSS
     public function registerCss($name, $cssPath)
     {
         $this->registers['wp_register_style'][$name] = $cssPath;
         return $this;
     }
 
+    # Register JS
     public function registerJs($name, $jsPath)
     {
         $this->registers['wp_register_script'][$name] = $jsPath;
         return $this;
     }
 
+    public function css($name)
+    {
+        wp_enqueue_style($name);
+        return $this;
+    }
+
+    public function js($name)
+    {
+        wp_enqueue_script($name);
+        return $this;
+    }
+
+    # Immediate add CSS 
     public function addCss($css,$name = null)
     {
         if($name==null)
@@ -142,6 +158,7 @@ class EasyCity{
         return $this;
     }
 
+    # Immediate add JS
     public function addJs($js,$name = null)
     {
         if($name==null)
@@ -164,7 +181,7 @@ class EasyCity{
 
         $this->load_hooks();
 
-        // $this->init_register();
+        $this->init_register();
 
         return $this;
     }

@@ -23,7 +23,3 @@ add_ajax('load_apartments',function(){
 
     view('apartment-loop',['query' => new WP_Query($args)]);
 });
-
-add_ajax('map_pop',function(){
-    // echo view('map-popup');
-});

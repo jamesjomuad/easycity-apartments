@@ -2,41 +2,20 @@
 #
 # Action Hooks
 #
-// add_action( 'wp_enqueue_scripts', function() {
-//   wp_register_style( 'fontawesome', EASYCITY_URL.'/assets/css/bulma.min.css');
-//   wp_enqueue_style( 'fontawesome' );
-  
-// 	wp_register_style( 'fontawesome', EASYCITY_URL.'/assets/css/all.min.css');
-// 	wp_enqueue_style( 'fontawesome' );
-
-// 	wp_register_style( 'childstyle', EASYCITY_URL.'/assets/css/style.css');
-//   wp_enqueue_style( 'childstyle' );
-  
-//   wp_register_script('scrollspy', EASYCITY_URL.'/assets/js/scrollspy.js', array('jquery'),'1.1', true);
-//   wp_enqueue_script('scrollspy');
-  
-//   wp_register_script('jquery.sticky', EASYCITY_URL.'/assets/js/jquery.sticky.js', array('jquery'),'1.1', true);
-// 	wp_enqueue_script('jquery.sticky');
-
-// 	wp_register_script('childscript', EASYCITY_URL.'/assets/js/script.js', array('jquery'),'1.1', true);
-// 	wp_enqueue_script('childscript');
-
-// 	wp_dequeue_script('google_map_api');
-// }, 11);
 
 add_action( 'init', function() {
-  register_post_type( 'apartment',
-    array(
-      'labels' => array(
-        'name' => __( 'Apartments' ),
-        'singular_name' => __( 'Apartment' )
-      ),
-      'public' => true,
-      'has_archive' => true,
-      'supports' => array( 'thumbnail', 'excerpt', 'title' ),
-	  'taxonomies' => array('post_tag')
-    )
-  );
+    register_post_type( 'apartment',
+        array(
+            'labels' => array(
+                'name' => __( 'Apartments' ),
+                'singular_name' => __( 'Apartment' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'supports' => array( 'thumbnail', 'excerpt', 'title' ),
+            'taxonomies' => array('post_tag')
+        )
+    );
 });
 
 add_action( 'pre_get_posts', function( $query ) {
@@ -159,3 +138,18 @@ add_action('init',function(){
     return $formated;
   }
 },10);
+
+add_action('wp_enqueue_scripts', function(){
+  global $post;
+  if ( $post->post_type == 'apartment' )
+  {
+    wp_enqueue_style('ec_bulma');
+    wp_enqueue_style( 'ec_all');
+    wp_enqueue_style( 'ec_jquery-ui');
+    wp_enqueue_style( 'ec_style');
+    wp_enqueue_script( 'ec_scrollspy');
+    wp_enqueue_script( 'ec_jquery');
+    wp_enqueue_script( 'ec_jquery');
+    wp_enqueue_script( 'ec_script');
+  }
+},99);
