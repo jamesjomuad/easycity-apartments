@@ -1,4 +1,5 @@
-<form action="" method="post">
+<form id="ec-search-form" action="" method="post">
+    <input type="hidden" name="action" value="search_apartments">
     <div class="container-fluid has-background-white box p-5 mb-6">
         <div class="columns is-desktop">
             <!-- column -->
@@ -7,7 +8,7 @@
                     <label class="label">Location</label>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
-                            <select>
+                            <select name="location">
                                 <option value="0">Select</option>
                                 <?php foreach($locations as $location) : ?>
                                     <option value="<?php echo $location ?>"><?php echo $location ?></option>
@@ -22,7 +23,7 @@
                 <div class="field">
                     <label class="label">Check In</label>
                     <p class="control has-icons-left">
-                        <input id="checkIn" class="input" type="date" placeholder="Check In">
+                        <input id="checkIn" class="input" name="in" type="date" placeholder="Check In">
                         <span class="icon is-small is-left">
                             <i class="fas fa-calendar"></i>
                         </span>
@@ -34,7 +35,7 @@
                 <div class="field">
                     <label class="label">Check Out</label>
                     <p class="control has-icons-left">
-                        <input id="checkOut" class="input" type="date" placeholder="Check Out">
+                        <input id="checkOut" class="input" name="out" type="date" placeholder="Check Out">
                         <span class="icon is-small is-left">
                             <i class="fas fa-calendar"></i>
                         </span>
@@ -57,6 +58,14 @@
                     </p>
                 </div>
             </div>
+            <!-- colum -->
+            <div class="column is-1">
+                <div class="is-grouped mt-5 pt-2">
+                    <p class="control">
+                        <button id="ec-clear" class="button is-fullwidth is-ghost" type="button">Clear</button>
+                    </p>
+                </div>
+            </div>
         </div>
 
         <!-- More filters -->
@@ -68,6 +77,7 @@
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select name="room">
+                                <option value="0">Select</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -89,7 +99,8 @@
                     <label class="label">Type</label>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
-                            <select name="room">
+                            <select name="type">
+                                <option value="0">Select</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -111,7 +122,8 @@
                     <label class="label">Bath</label>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
-                            <select name="room">
+                            <select name="bath">
+                                <option value="0">Select</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -126,7 +138,7 @@
                 <div class="field">
                     <label class="label">
                         Price: 
-                        <input type="text" id="amount" readonly style="border:0;color: #F44932;font-weight:bold;background:none;">
+                        <input name="price_range" type="text" id="amount" readonly style="border:0;color: #F44932;font-weight:bold;background:none;">
                     </label>
                     <div class="control is-expanded">
                         <div class="is-fullwidth">

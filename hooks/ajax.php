@@ -2,6 +2,8 @@
 #
 # Ajax
 #
+
+# Infinite load
 add_ajax('load_apartments',function(){
     $paged = $_POST['page'];
     $args = [];
@@ -22,4 +24,11 @@ add_ajax('load_apartments',function(){
     }
 
     view('apartment-loop',['query' => new WP_Query($args)]);
+});
+
+# Apartment Search
+add_ajax('search_apartments',function(){
+    
+    
+    // view('apartment-loop',['query' => new WP_Query($args)]);
 });
