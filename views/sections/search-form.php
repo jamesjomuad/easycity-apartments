@@ -1,5 +1,6 @@
 <form id="ec-search-form" action="" method="post">
     <input type="hidden" name="action" value="search_apartments">
+    <input type="hidden" name="filter" value="1">
     <div class="container-fluid has-background-white box p-5 mb-6">
         <div class="columns is-desktop">
             <!-- column -->
@@ -9,7 +10,7 @@
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select name="location">
-                                <option value="0">Select</option>
+                                <option value="">Select Location</option>
                                 <?php foreach($locations as $location) : ?>
                                     <option value="<?php echo $location ?>"><?php echo $location ?></option>
                                 <?php endforeach; ?>
@@ -77,7 +78,7 @@
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select name="room">
-                                <option value="0">Select</option>
+                                <option value="">Select Room</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -100,7 +101,7 @@
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select name="type">
-                                <option value="0">Select</option>
+                                <option value="">Select Type</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -123,7 +124,7 @@
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select name="bath">
-                                <option value="0">Select</option>
+                                <option value="">Select Bath</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>

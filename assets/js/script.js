@@ -1,83 +1,21 @@
 (function($){
-
-    $.search = {
-        name: "Search listing filter",
-        version: '1.0.0',
-        form: $('#ec-search-form')
-    }
-
-    let self = $.search;
-
-    self.getData = function(){
-        return this.form.serializeArray();
-    }
-
-    self.init = function(){
-        var the = this
-
-        // Search Filter
-        $(document).on('ready', function(){
-            $('#ec-filter').on('click', function(){
-                $('#ec-filter-panel').toggleClass('is-hidden')
-            });
-            
-            $( "#slider-range" ).slider();
-            $( "#slider-range" ).slider({
-                range: true,
-                min: 0,
-                max: 1000,
-                values: [ 0, 1000 ],
-                slide: function( event, ui ) {
-                    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                }
-            });
-            
-            $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-            
-            var datepicker = bulmaCalendar.attach('[type="date"]', {
-                type: 'datetime',
-                showFooter: false,
-                displayMode: 'default'
-            });
-
-            $('#checkIn').on('click',function(){
-                datepicker[1].hide()
-            });
-            $('#checkOut').on('click',function(){
-                datepicker[0].hide()
-            });
-            $('body').on('click',function(){
-                datepicker[0].hide()
-                datepicker[1].hide()
-            });
-        });
-
-        // Search Form
-        $('#ec-search').on('click', function(){
-            $('#loader').data('page',1)
-            $.ajax({
-                url: '/wp-admin/admin-ajax.php',
-                type: 'POST',
-                data: the.getData(),
-            });
-        });
-    }
-
-    $.search.init();
-})(jQuery);
-
-
-(function($){
-    function getApartments(request){
+    function getApartments(filter){
         var $loader  = $('#loader');
         var paged    = $loader.data('page');
         var nextPage = parseInt(paged)+1;
+        var _data    = null;
+        
 
+        if($.search.filter){
+
+        }
+        
         if( $loader.data('status')!="loading" ){
+            _data = $.extend({ page: paged, action: 'partment_list', }, filter || {})
             $.ajax({
                 url: '/wp-admin/admin-ajax.php',
                 type: 'POST',
-                data: $.extend({ page: paged, action: 'load_apartments', }, request || {}),
+                data: data,
                 error: function(response){
                     $loader.find('.loading').hide();
                     $loader.find('button').show();
@@ -240,6 +178,79 @@
         }).scrollSpy();
     });
 
-        
 
+    $.search = {
+        name: "Search listing filter",
+        version: '1.0.0',
+        form: $('#ec-search-form'),
+        filter: false
+    }
+
+    let self = $.search;
+
+    self.init = function(){
+        // Search Filter
+        $(document).on('ready', this.onReady);
+
+        // Search Form
+        $('#ec-search').on('click', this.onSearch);
+    
+        // Clear
+        $('#ec-clear').on('click', this.onClear);
+    }
+
+    self.getData = function(){
+        return this.form.serializeArray();
+    }
+
+    self.onSearch = function(){
+        var the = this
+        $('#loader').data('page',1)
+        this.filter = true;
+    }
+
+    self.onClear = function(){
+        this.filter = false;
+        $('#loader').data('page',1)
+        $(this).closest('form').find("input[type=text], select").val("");
+        getApartments();
+    }
+
+    self.onReady = function(){
+        $('#ec-filter').on('click', function(){
+            $('#ec-filter-panel').toggleClass('is-hidden')
+        });
+        
+        $( "#slider-range" ).slider();
+        $( "#slider-range" ).slider({
+            range: true,
+            min: 0,
+            max: 1000,
+            values: [ 0, 1000 ],
+            slide: function( event, ui ) {
+                $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+            }
+        });
+        
+        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+        
+        var datepicker = bulmaCalendar.attach('[type="date"]', {
+            type: 'datetime',
+            showFooter: false,
+            displayMode: 'default'
+        });
+
+        $('#checkIn').on('click',function(){
+            datepicker[1].hide()
+        });
+        $('#checkOut').on('click',function(){
+            datepicker[0].hide()
+        });
+        $('body').on('click',function(){
+            datepicker[0].hide()
+            datepicker[1].hide()
+        });
+    }
+
+    $.search.init();
 }(jQuery));

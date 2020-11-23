@@ -31,23 +31,26 @@ function view($name=null,$variables=[])
 
 function input($name = null)
 {
-    if(isset($_POST[$name]))
+    $post = $_POST;
+    $get  = $_GET;
+
+    if(isset($post[$name]))
     {
-        return $_POST[$name];
+        return $post[$name];
     }
-    elseif(isset($_GET[$name]))
+    elseif(isset($get[$name]))
     {
-        return $_GET[$name];
+        return $get[$name];
     }
     else
     {
-        if(!empty($_POST))
+        if(!empty($post))
         {
-            return $_POST;
+            return $post;
         }
-        elseif(!empty($_GET))
+        elseif(!empty($get))
         {
-            return $_GET;
+            return $get;
         }
     }
 
