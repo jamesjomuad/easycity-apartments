@@ -90,9 +90,13 @@ class View{
         return $this;
     }
 
-    private function display()
+    public function get()
     {
-
+        $this->toRender = false;
+        extract($this->variables);
+        ob_start();
+        include $this->viewPath;
+        return ob_get_clean();
     }
 
     function __destruct()

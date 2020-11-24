@@ -20,6 +20,7 @@
         name: "Search listing filter",
         version: '1.0.0',
         form: $('#ec-search-form'),
+        ul: $('.apartment_list>ul'),
         filter: false,
         rules: {
             in: {
@@ -49,6 +50,7 @@
     }
 
     self.fetch = function(filter){
+        var $this    = this;
         var $loader  = $('#loader');
         var paged    = $loader.data('page');
         var nextPage = parseInt(paged) + 1;
@@ -64,6 +66,7 @@
             $.ajax({
                 url: '/wp-admin/admin-ajax.php',
                 type: 'POST',
+                dataType: 'json',
                 data: request,
                 error: function(response){
                     $loader.find('.loading').hide();
@@ -71,25 +74,49 @@
                     $loader.data('status', false);
                 },
                 success: function(response){
-                    if(response==''){
-                        $('#loader .loading').hide()
-                        $('#loader #ajax-message').show().text('Not Found!')
-                    } else {
-                        var lists = $(response);
+                    if($this.filter){
+                        console.log(response)
+                        var lists = $(response.html);
                         var anchor = lists.find('a').addClass('v-hide');
 
                         $('#loader #ajax-message').hide();
                         $('#loader').data( 'page', nextPage )
                         $('.apartment_list ul').append(lists);
 
+                        // Domino show effect
                         anchor.on('scrollSpy:enter',function(){
                             $(this).removeClass('v-hide')
                             $(this).addClass('v-show')
                         }).scrollSpy();
+
+                        $loader.data('status', false);
+                        if(lists.length<=response.per_page){
+                            $this.loader.hide()
+                        }
+                    }else{
+
+                        if(response==''){
+                            $('#loader .loading').hide()
+                            $('#loader #ajax-message').show().text('Not Found!')
+                        } else {
+                            var lists = $(response.html);
+                            var anchor = lists.find('a').addClass('v-hide');
+
+                            $('#loader #ajax-message').hide();
+                            $('#loader').data( 'page', nextPage )
+                            $('.apartment_list ul').append(lists);
+
+                            anchor.on('scrollSpy:enter',function(){
+                                $(this).removeClass('v-hide')
+                                $(this).addClass('v-show')
+                            }).scrollSpy();
+                        }
+                        $loader.data('status', false);
+
                     }
-                    $loader.data('status', false);
                 }
             });
+            
             $loader.data('status','loading');
         }
 
@@ -98,10 +125,13 @@
 
     self.onSearch = function(e){
         e.preventDefault();
-        
-        $('#loader').data('page',1);
-        $.search.filter = true;
-        $.search.fetch();
+        if($.search.form.valid()){
+            $('#loader').data('page',1);
+            $.search.filter = true;
+            $.search.ul.html('');
+            $.search.loader.show();
+            $.search.fetch();
+        }
     }
 
     self.onClear = function(){
@@ -162,6 +192,17 @@
             datepicker[0].hide()
             datepicker[1].hide()
         });
+    }
+
+    self.loader = {
+        loader: $('#loader .loading'),
+        show: function(){
+            $('#loader #ajax-message').hide();
+            this.loader.show();
+        },
+        hide: function(){
+            this.loader.hide()
+        }
     }
 
     $.search.init();

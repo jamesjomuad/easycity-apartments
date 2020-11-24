@@ -183,8 +183,18 @@ class EasyCity{
         {
             add_ajax($name, function() use($callback) {
                 require_once $this->plugin_dir . "/controllers/$callback.php";
-                (new $callback())->index();
-                exit;
+
+                $class = (new $callback())->index();
+
+                if(is_array($class))
+                {
+                    echo json_encode($class);
+                    die;
+                }
+                else
+                {
+                    exit;
+                }
             });
         }
 
