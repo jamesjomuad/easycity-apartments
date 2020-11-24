@@ -1,4 +1,21 @@
 (function($){
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+
     $.search = {
         name: "Search listing filter",
         version: '1.0.0',
@@ -39,7 +56,7 @@
         
         if( $loader.data('status')!="loading" ){
             if(this.filter){
-                filter = {filter:this.params()}
+                filter = {filter:this.form.serializeObject()}
             }
 
             request = $.extend({ page: paged, action: 'partment_list', }, filter || {});
@@ -78,10 +95,6 @@
 
         return this;
     };
-
-    self.params = function(){
-        return this.form.serializeArray();
-    }
 
     self.onSearch = function(e){
         e.preventDefault();

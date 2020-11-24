@@ -174,10 +174,18 @@ class EasyCity{
     }
 
     public function ajax($name, $callback)
-    {   
+    {
         if(is_callable($callback))
         {
             add_ajax($name, $callback);
+        }
+        else if( is_string($callback) )
+        {
+            add_ajax($name, function() use($callback) {
+                require_once $this->plugin_dir . "/controllers/$callback.php";
+                (new $callback())->index();
+                exit;
+            });
         }
 
         return $this;
