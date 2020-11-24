@@ -175,17 +175,9 @@ class EasyCity{
 
     public function ajax($name, $callback)
     {   
-        dd(
-            new $callback()
-        );
-
         if(is_callable($callback))
         {
             add_ajax($name, $callback);
-        }
-        else if(is_string($callback))
-        {
-            add_ajax($name, new $callback());
         }
 
         return $this;
