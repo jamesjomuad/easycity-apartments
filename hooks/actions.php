@@ -139,6 +139,6 @@ add_action('wp_enqueue_scripts', function(){
     wp_enqueue_script('ec_scrollspy');
     wp_enqueue_script('ec_jquery-ui');
     wp_enqueue_script('ec_jquery');
-    wp_enqueue_script('ec_script');
+    wp_enqueue_script('ec_single');
   }
 },99);

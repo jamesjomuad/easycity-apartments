@@ -1,51 +1,4 @@
 (function($){
-    function getApartments(filter){
-        var $loader  = $('#loader');
-        var paged    = $loader.data('page');
-        var nextPage = parseInt(paged)+1;
-        var _data    = null;
-        
-
-        if($.search.filter){
-
-        }
-        
-        if( $loader.data('status')!="loading" ){
-            _data = $.extend({ page: paged, action: 'partment_list', }, filter || {})
-            $.ajax({
-                url: '/wp-admin/admin-ajax.php',
-                type: 'POST',
-                data: data,
-                error: function(response){
-                    $loader.find('.loading').hide();
-                    $loader.find('button').show();
-                    $loader.data('status', false);
-                },
-                success: function(response){
-                    if(response==''){
-                        $('#loader .loading').hide()
-                        $('#loader #ajax-message').show().text('Not Found!')
-                    } else {
-                        var lists = $(response);
-                        var anchor = lists.find('a').addClass('v-hide');
-
-                        $('#loader').hide();
-                        $('#loader #ajax-message').hide();
-                        $('#loader').data( 'page', nextPage )
-                        $('.apartment_list ul').append(lists);
-
-                        anchor.on('scrollSpy:enter',function(){
-                            $(this).removeClass('v-hide')
-                            $(this).addClass('v-show')
-                        }).scrollSpy();
-                    }
-                    $loader.data('status', false);
-                }
-            });
-            $loader.data('status','loading');
-        }
-    };
-
     $(document).ready(function(){
         var awrap   = $('.apartment-wrap').first(),
             apar    = awrap.closest('.vc_row'),
@@ -53,7 +6,7 @@
             jspopgal= $('.js-popgal');
         
         awrap.appendTo(apar);
-
+    
         /* For Gallery Popup Slider */
         if ( jspopgal.length ) {
             var popgal      = $('.popgal'),
@@ -67,11 +20,11 @@
                 jsContact   = $('.jscontact'),
                 jsGall      = $('.jsgall'),
                 spric       = $('.sticky_price_tag').first();
-
+    
             /* Change position to outside the theme wrappers */
             popgal.appendTo(body);
             spric.appendTo(body);
-
+    
             /* Show Gallery Popup Slider on thumbnail Click */
             jspopgal.click(function(){
                 var image   = $(this),
@@ -85,7 +38,7 @@
                 })
                 popgal.addClass('shown').fadeIn('slow');
             });
-
+    
             /* Previous and Next buttons */
             $('.image_wrap div', gal).first().addClass('show');
             galNav.click(function(){
@@ -98,7 +51,7 @@
                 active.removeClass('show');
                 nextImage.addClass('show');
             });
-
+    
             /* Previous and Next buttons */
             popgalNav.click(function(){
                 var isPrev = $(this).hasClass('popgal-prev'),
@@ -109,29 +62,29 @@
                 }
                 nextImage.click();
             });
-
+    
             /* Close buttons */
             popgalClose.click(function(){
                 popgal.fadeOut('fast', function(){
                     popgal.removeClass('shown');
                 });
             });
-
+    
             jsGall.click(function(){
                 jspopgal.first().click();
             });
-
-
+    
+    
             /* set apartment */
             $('#apartmentid').val($('#hidden_apartmentid').text());
             $('#apartmentname').val($('#hidden_apartmentname').text());
             $('#apartmenturl').val($('#hidden_apartmenturl').text());
-
+    
             /* jscontact */
             jsContact.click(function(){
                 popContact.addClass('shown').show();
             });
-
+    
             /* Close buttons */
             popContactX.click(function(){
                 $('.wpcf7-response-output').hide();
@@ -139,7 +92,7 @@
                     popContact.removeClass('shown');
                 });
             });
-
+    
             $(document).keydown(function(e){
                 var code = e.keyCode || e.which;
                 
@@ -159,98 +112,5 @@
                 }
             });
         }
-
-        $("#map").sticky({ topSpacing: 0 });
     });
-
-    // Infinite Load
-    $(document).on('ready',function(){
-        $('#loader button').on('click',function(){
-            $('#loader').find('.loading').show();
-            $('#loader').find('button').hide();
-            setTimeout(function(){
-                getApartments()
-            }, 3000);
-        });
-
-        $('#loader').on('scrollSpy:enter', function() {
-            getApartments()
-        }).scrollSpy();
-    });
-
-
-    $.search = {
-        name: "Search listing filter",
-        version: '1.0.0',
-        form: $('#ec-search-form'),
-        filter: false
-    }
-
-    let self = $.search;
-
-    self.init = function(){
-        // Search Filter
-        $(document).on('ready', this.onReady);
-
-        // Search Form
-        $('#ec-search').on('click', this.onSearch);
-    
-        // Clear
-        $('#ec-clear').on('click', this.onClear);
-    }
-
-    self.getData = function(){
-        return this.form.serializeArray();
-    }
-
-    self.onSearch = function(){
-        var the = this
-        $('#loader').data('page',1)
-        this.filter = true;
-    }
-
-    self.onClear = function(){
-        this.filter = false;
-        $('#loader').data('page',1)
-        $(this).closest('form').find("input[type=text], select").val("");
-        getApartments();
-    }
-
-    self.onReady = function(){
-        $('#ec-filter').on('click', function(){
-            $('#ec-filter-panel').toggleClass('is-hidden')
-        });
-        
-        $( "#slider-range" ).slider();
-        $( "#slider-range" ).slider({
-            range: true,
-            min: 0,
-            max: 1000,
-            values: [ 0, 1000 ],
-            slide: function( event, ui ) {
-                $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-            }
-        });
-        
-        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-        
-        var datepicker = bulmaCalendar.attach('[type="date"]', {
-            type: 'datetime',
-            showFooter: false,
-            displayMode: 'default'
-        });
-
-        $('#checkIn').on('click',function(){
-            datepicker[1].hide()
-        });
-        $('#checkOut').on('click',function(){
-            datepicker[0].hide()
-        });
-        $('body').on('click',function(){
-            datepicker[0].hide()
-            datepicker[1].hide()
-        });
-    }
-
-    $.search.init();
-}(jQuery));
+})(jQuery);

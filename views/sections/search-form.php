@@ -47,7 +47,7 @@
             <div class="column">
                 <div class="is-grouped mt-5 pt-2">
                     <p class="control">
-                        <a id="ec-search" class="button has-text-white is-fullwidth" style="background: #F44932;border: none;">Search</a>
+                        <button id="ec-search" class="button has-text-white is-fullwidth" type="submit" style="background: #F44932;border: none;">Search</button>
                     </p>
                 </div>
             </div>
