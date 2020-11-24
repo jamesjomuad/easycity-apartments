@@ -173,6 +173,24 @@ class EasyCity{
         return $this;
     }
 
+    public function ajax($name, $callback)
+    {   
+        dd(
+            new $callback()
+        );
+
+        if(is_callable($callback))
+        {
+            add_ajax($name, $callback);
+        }
+        else if(is_string($callback))
+        {
+            add_ajax($name, new $callback());
+        }
+
+        return $this;
+    }
+
     public function run()
     {
         $this->load_css();
@@ -182,6 +200,15 @@ class EasyCity{
         $this->load_hooks();
 
         $this->init_register();
+
+        return $this;
+    }
+
+    public function init()
+    {
+        add_action('init', function(){
+            $this->run();
+        });
 
         return $this;
     }

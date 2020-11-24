@@ -3,12 +3,22 @@
         name: "Search listing filter",
         version: '1.0.0',
         form: $('#ec-search-form'),
-        filter: false
+        filter: false,
+        rules: {
+            in: {
+                required: true
+            },
+            out: {
+                required: true
+            }
+        }
     }
 
     let self = $.search;
 
     self.init = function(){
+        var $this = this;
+
         // Search Filter
         $(document).on('ready', this.onReady);
 
@@ -18,20 +28,7 @@
         // Clear
         $('#ec-clear').on('click', this.onClear);
 
-        this.initValidation();
-    }
-
-    self.initValidation = function(){
-        this.form.validate({
-            rules: {
-                in: {
-                    required: true
-                },
-                out: {
-                    required: true
-                }
-            }
-        });
+        $this.form.validate({ rules: $this.rules });
     }
 
     self.fetch = function(filter){
@@ -86,7 +83,9 @@
         return this.form.serializeArray();
     }
 
-    self.onSearch = function(){
+    self.onSearch = function(e){
+        e.preventDefault();
+        
         $('#loader').data('page',1);
         $.search.filter = true;
         $.search.fetch();
