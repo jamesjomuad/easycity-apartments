@@ -74,9 +74,9 @@ class View{
         return $this;
     }
 
-    public function partial($name)
+    public function partial($name, $variables = [])
     {
-        return $this->set("partials/".$name)->render();
+        return $this->set("partials/".$name, $variables)->render();
     }
 
     public function section($name, $variables = [])

@@ -3,8 +3,7 @@
 # Action Hooks
 #
 
-
-add_action( 'init', function() {
+$this->action('init', function() {
     register_post_type( 'apartment',
         array(
             'labels' => array(
@@ -19,7 +18,7 @@ add_action( 'init', function() {
     );
 });
 
-add_action('init',function(){
+$this->action('init',function(){
     function get_locations()
     {
         $locations = [];
@@ -104,9 +103,9 @@ add_action('init',function(){
         sort($uniq);
         return $uniq;
     }
-},10);
+});
 
-add_action( 'pre_get_posts', function( $query ) {
+$this->action( 'pre_get_posts', function( $query ) {
   if ( ! $query->is_main_query() || 2 != count( $query->query ) || ! isset( $query->query['page'] ) ) {
     return;
   }
@@ -115,33 +114,17 @@ add_action( 'pre_get_posts', function( $query ) {
   }
 });
 
-add_action('acf/init', function() {
+$this->action('acf/init', function() {
 	acf_update_setting('google_api_key', 'AIzaSyAxwPVD6tCrXE9q1qQ889-9VUDkKMGMGn4');
 });
 
-add_action( 'wp_footer', function() {
-	if ( is_singular( 'apartment' ) ) :
-  ?>
-	<div class="popgal">
-		<div class="popgal-overlay"></div>
-		<div class="popgal-close"><i class="far fa-times-circle"></i></div>
-		<img src="<?php echo $gallery[0]['url']; ?>">
-		<div class="popgal-controls">
-			<div class="popgal-prev"><i class="fa fa-chevron-left"></i></div>
-			<div class="popgal-next"><i class="fa fa-chevron-right"></i></div>
-		</div>
-	</div>
-	<div class="popcontact">
-		<div class="popcontact-overlay"></div>
-		<div class="popcontact-close"><i class="far fa-times-circle"></i></div>
-		<div class="popcontact-content">
-			<?php echo do_shortcode('[contact-form-7 id="1085" title="Contact Form ( Apartment )"]') ?>
-		</div>
-	</div>
-<?php endif;
+$this->action( 'wp_footer', function() {
+    if ( is_singular( 'apartment' ) ) : 
+        view()->section('popgal');
+    endif;
 });
 
-add_action('wp_enqueue_scripts', function(){
+$this->action('wp_enqueue_scripts', function(){
   global $post;
   
   // enqueue assets only for apartments
@@ -157,12 +140,3 @@ add_action('wp_enqueue_scripts', function(){
     wp_enqueue_script('ec_single');
   }
 },99);
-
-
-
-
-add_action('init',function(){
-    dd(
-        $this
-    );
-});
