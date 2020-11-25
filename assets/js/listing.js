@@ -49,7 +49,7 @@
         $this.form.validate({ rules: $this.rules });
     }
 
-    self.fetch = function(filter){
+    self.get = function(filter){
         var $this    = this;
         var $loader  = $('#loader');
         var paged    = $loader.data('page');
@@ -75,7 +75,6 @@
                 },
                 success: function(response){
                     if($this.filter){
-                        console.log(response)
                         var lists = $(response.html);
                         var anchor = lists.find('a').addClass('v-hide');
 
@@ -130,15 +129,15 @@
             $.search.filter = true;
             $.search.ul.html('');
             $.search.loader.show();
-            $.search.fetch();
+            $.search.get();
         }
     }
 
     self.onClear = function(){
         $.search.filter = false;
         $('#loader').data('page',1)
-        $(this).closest('form').find("input[type=text], select").val("");
-        $.search.fetch();
+        $(this).closest('form').find("input[type=text], select").not('#amount').val("");
+        $.search.get();
     }
 
     self.onReady = function(){
@@ -147,13 +146,13 @@
             $('#loader').find('.loading').show();
             $('#loader').find('button').hide();
             setTimeout(function(){
-                $.search.fetch()
+                $.search.get()
             }, 3000);
         });
 
         // Init ScrollSpy
-        $('#loader').on('scrollSpy:enter', function() {
-            $.search.fetch()
+        $('#loader .loading').on('scrollSpy:enter', function() {
+            $.search.get()
         }).scrollSpy();
 
         $("#map").sticky({ topSpacing: 0 });

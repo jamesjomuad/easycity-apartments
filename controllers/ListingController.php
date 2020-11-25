@@ -4,10 +4,9 @@ class ListingController
 {
     public function index()
     {
-        $paged              = $_POST['page'];
         $args               = [];
         $args['post_type']  = 'apartment';
-        $args['paged']      = $paged;
+        $args['paged']      = input('page');
 
         // Filter
         if( input('filter') )
@@ -23,9 +22,11 @@ class ListingController
 
     private function filterQuery()
     {
+        $input = array_filter( input('filter') );
+
         $meta_query = ['relation' => 'OR'];
 
-        foreach(array_filter( input('filter') ) as $k=>$filter)
+        foreach($input as $k=>$filter)
         {
             array_push($meta_query,[
                 'key'     => $k,
@@ -35,11 +36,6 @@ class ListingController
         }
 
         return $meta_query;
-    }
-
-    private function formatFilter()
-    {
-
     }
 
 }

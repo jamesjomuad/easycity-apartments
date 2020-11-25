@@ -1,6 +1,7 @@
 <?php
 
-class EasyCity{
+class EasyCity
+{
 
     public $version = "2.0.0";
     public $plugin_name;
