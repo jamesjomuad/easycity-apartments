@@ -118,6 +118,12 @@ class EasyCity
         }, 11);
     }
 
+    public function action($name, $callback, int $priority = 10, int $accepted_args = 1)
+    {
+        add_action( $name, $callback, $priority, $accepted_args);
+        return $this;
+    }
+
     # Register CSS
     public function registerCss($name, $cssPath)
     {

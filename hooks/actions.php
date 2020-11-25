@@ -3,6 +3,7 @@
 # Action Hooks
 #
 
+
 add_action( 'init', function() {
     register_post_type( 'apartment',
         array(
@@ -162,6 +163,6 @@ add_action('wp_enqueue_scripts', function(){
 
 add_action('init',function(){
     dd(
-        get_room_types()
+        $this
     );
 });
