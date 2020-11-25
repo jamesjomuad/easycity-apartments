@@ -79,7 +79,7 @@ class View{
         return $this->set("partials/".$name)->render();
     }
 
-    public function section($name, $variables)
+    public function section($name, $variables = [])
     {
         return $this->set("sections/".$name, $variables)->render();
     }
