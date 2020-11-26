@@ -31,27 +31,18 @@ function view($name=null,$variables=[])
 
 function input($name = null)
 {
-    $post = $_POST;
-    $get  = $_GET;
+    $post   = $_POST;
+    $get    = $_GET;
+    $merged = array_merge($post,$get);
+    $dot    = new \Adbar\Dot($merged);
 
-    if(isset($post[$name]))
+    if($name==null)
     {
-        return $post[$name];
+        return $merged;
     }
-    elseif(isset($get[$name]))
+    else if(is_string($name))
     {
-        return $get[$name];
-    }
-    else
-    {
-        if(!empty($post))
-        {
-            return $post;
-        }
-        elseif(!empty($get))
-        {
-            return $get;
-        }
+        return $dot->get($name);
     }
 
     return null;
