@@ -2,7 +2,8 @@
     "name": "james/easycity-apartments",
     "type": "wordpress-plugin",
     "require": {
-        "nesbot/carbon": "^2.41"
+        "nesbot/carbon": "^2.41",
+        "adbario/php-dot-notation": "^2.2"
     },
     "authors": [
         {

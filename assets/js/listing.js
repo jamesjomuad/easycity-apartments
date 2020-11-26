@@ -61,7 +61,7 @@
                 filter = {filter:this.form.serializeObject()}
             }
 
-            request = $.extend({ page: paged, action: 'partment_list', }, filter || {});
+            request = $.extend({ page: paged, action: 'apartment_list', }, filter || {});
 
             $.ajax({
                 url: '/wp-admin/admin-ajax.php',
@@ -134,9 +134,14 @@
     }
 
     self.onClear = function(){
-        $.search.filter = false;
+        if($.search.filter==false)
+        return;
+
         $('#loader').data('page',1)
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
+        $.search.filter = false;
+        $.search.ul.html('');
+        $.search.loader.show();
         $.search.get();
     }
 
