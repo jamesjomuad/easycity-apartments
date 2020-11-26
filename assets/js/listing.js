@@ -197,6 +197,9 @@
         Search.dateIn.minDate = new Date;
         Search.dateOut.minDate = new Date;
 
+        /* Fixed form issue */
+        Search.form.find('.datepicker button').not('[type="button"]').attr('type','button');
+
         $('#checkIn').on('click',function(){
             datepicker[1].hide()
         });
