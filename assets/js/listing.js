@@ -124,25 +124,27 @@
 
     self.onSearch = function(e){
         e.preventDefault();
-        if($.search.form.valid()){
+        var Search = $.search;
+        if(Search.form.valid()){
             $('#loader').data('page',1);
-            $.search.filter = true;
-            $.search.ul.html('');
-            $.search.loader.show();
-            $.search.get();
+            Search.filter = true;
+            Search.list = Search.ul.find('li').remove();
+            Search.loader.show();
+            Search.get();
         }
     }
 
     self.onClear = function(){
-        if($.search.filter==false)
+        var Search = $.search;
+        if(Search.filter==false)
         return;
 
         $('#loader').data('page',1)
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
-        $.search.filter = false;
-        $.search.ul.html('');
-        $.search.loader.show();
-        $.search.get();
+        Search.filter = false;
+        Search.ul.html(Search.list)
+        Search.loader.show();
+        Search.get();
     }
 
     self.onReady = function(){
