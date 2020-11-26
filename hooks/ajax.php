@@ -8,6 +8,6 @@
 #
 #   Apartment Listing
 #
-$this->ajax('apartment_list',"ListingController");
+$this->ajax('apartment_list',"ListingController@index");
 
 $this->ajax('test',"TestController");

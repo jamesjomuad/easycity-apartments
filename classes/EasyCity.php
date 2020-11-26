@@ -186,21 +186,22 @@ class EasyCity
         {
             add_ajax($name, $callback);
         }
-        else if( is_string($callback) )
+        else if( is_string($callback) && strpos($callback, '@') !== false )
         {
-            add_ajax($name, function() use($callback) {
-                require_once $this->plugin_dir . "/controllers/$callback.php";
+            $classMethod = explode('@',$callback); 
+            $class       = $classMethod[0];
+            $method      = $classMethod[1];
 
-                $class = (new $callback())->index();
+            require_once $this->plugin_dir . "/controllers/{$class}.php";
+
+            add_ajax($name, function() use($callback, $class, $method) {
+
+                $class = (new $class())->$method();
 
                 if(is_array($class))
                 {
                     echo json_encode($class);
                     die;
-                }
-                else
-                {
-                    exit;
                 }
             });
         }
