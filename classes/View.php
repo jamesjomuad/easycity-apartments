@@ -1,36 +1,38 @@
 <?php
 
 class View{
-    private $path        = EASYCITY_DIR.'/views/';
-    private $extensions  = ['php','html','htm'];
-    private $template    = null;
-    private $name        = null;
-    private $variables   = [];
-    private $view        = null;
-    private $hasRendered = false;
-    public $isExist      = false;
+    private $directory  = EASYCITY_DIR.'/views/';
+    private $extensions = ['php','html','htm'];
+    private $template   = null;
+    private $name       = null;
+    private $variables  = [];
+    private $viewPath   = null;
+    private $toRender   = false;
+    public $isExist     = false;
 
-    public function setPath($path)
+    public function setDirectory($directory)
     {
-        $this->path = $path;
+        $this->directory = $directory;
         return $this;
+    }
+
+    public function getDirectory()
+    {
+        $this->toRender = false;
+        return $this->path;
     }
 
     public function getPath()
     {
-        return $this->path;
-    }
-
-    public function get(string $name)
-    {
-        return $this->set($name)->render();
+        $this->toRender = false;
+        return $this->viewPath;
     }
 
     public function isExist($name)
     {
         foreach($this->extensions as $extension)
         {
-            if(file_exists( $this->path.$name.'.'.$extension ))
+            if(file_exists( $this->directory.$name.'.'.$extension ))
                 return true;
         }
 
@@ -44,16 +46,16 @@ class View{
 
         $this->name = $name;
         $this->variables = $variables;
-        $this->hasRendered = false;
+        $this->toRender = false;
 
         foreach($this->extensions as $extension)
         {
-            $templatePath = $this->path.$name.'.'.$extension;
+            $templatePath = $this->directory.$name.'.'.$extension;
             if(file_exists( $templatePath ))
             {
                 $this->isExist = true;
                 $this->template = $name.'.'.$extension;
-                $this->view = $templatePath;
+                $this->viewPath = $templatePath;
                 break;
             }
         }
@@ -68,22 +70,18 @@ class View{
 
     public function render()
     {
-        $this->hasRendered = true;
-        extract($this->variables);
-        ob_start();
-        include $this->view;
-        echo ob_get_clean();
+        $this->toRender = true;
         return $this;
     }
 
-    public function partial($name)
+    public function partial($name, $variables = [])
     {
-        return $this->set("partials/".$name)->render();
+        return $this->set("partials/".$name, $variables)->render();
     }
 
-    public function section($name)
+    public function section($name, $variables = [])
     {
-        return $this->set("sections/".$name)->render();
+        return $this->set("sections/".$name, $variables)->render();
     }
 
     public function with(array $variables = [])
@@ -92,9 +90,24 @@ class View{
         return $this;
     }
 
+    public function get()
+    {
+        $this->toRender = false;
+        extract($this->variables);
+        ob_start();
+        include $this->viewPath;
+        return ob_get_clean();
+    }
+
     function __destruct()
     {
-        if($this->hasRendered==false)
-        echo $this->render();
+        if($this->toRender==true)
+        {
+            extract($this->variables);
+            ob_start();
+            include $this->viewPath;
+            echo ob_get_clean();
+        }
+        
     }
 }

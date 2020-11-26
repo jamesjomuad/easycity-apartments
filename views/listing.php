@@ -1,4 +1,6 @@
-<?php view()->section('search-form'); ?>
+<?php 
+	view()->section('search-form',['locations' => get_locations()]);
+?>
 
 <div class="ec_apartments">
 	<div class="apartment_list_wrap">
@@ -31,129 +33,131 @@
 
 <?php view()->partial('map-popup');  ?>
 
-<script>
-	function initMap(){
-		var locations = <?php echo json_encode(get_apartments_by_location()) ?>;
-		var $ = jQuery;
-		window.map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 12,
-			center: {lat: 1.359290759715824, lng: 103.8654550109253},
-			zoomControl: false,
-			zoomControlOptions: { position: google.maps.ControlPosition.LEFT_CENTER },
-			streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
-		});
-		var infowindow = new google.maps.InfoWindow();
-		var markerIcon = '<?php echo EASYCITY_URL.'/assets/images/marker.png' ?>'
-
-		window.htmlContent = function (data) {
-			var content = document.getElementById('mapop').innerHTML;
-			var $html = $(content);
-			var $img = $html.find('img.featured');
-			var $title = $html.find('.prop-title');
-			var $priceRange = $html.find('.price-range');
-
-			$title.text(data.address).attr('href','#'+data.mapAddress);
-			$priceRange.text(data.priceRange);
-			$img.attr('src',data.thumb);
-
-			var $propertyWrap = $html.find('#loc-list');
-			var $properties = $html.find('#loc-list li').clone();
-
-			$html.find('#loc-list li').remove();
-
-			$.each(data.apartments, function(i,data){
-				var apartment = $properties.clone();
-				apartment.find('a').attr('href',data.url);
-				apartment.find('.thumb').attr('src',data.thumb)
-				apartment.find('.price').text(data.price)
-				apartment.find('.title').text(data.title)
-				$propertyWrap.append(apartment);
+<?php /*
+	<script>
+		function initMap(){
+			var locations = <?php echo json_encode(get_apartments_by_location()) ?>;
+			var $ = jQuery;
+			window.map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 12,
+				center: {lat: 1.359290759715824, lng: 103.8654550109253},
+				zoomControl: false,
+				zoomControlOptions: { position: google.maps.ControlPosition.LEFT_CENTER },
+				streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_TOP },
 			});
+			var infowindow = new google.maps.InfoWindow();
+			var markerIcon = '<?php echo EASYCITY_URL.'/assets/images/marker.png' ?>'
 
-			return $html[0];
-		}
-		window.propertyMouseover = function (e) {
-			var prop_id = e.id;
-			google.maps.event.trigger(markers[prop_id], "dblclick");
-		}
-		window.propertyMouseout = function (e) {
-			var prop_id = e.id;
-			google.maps.event.trigger(markers[prop_id], "mouseout");
-		}
-		window.propertyDirection = function (e) {
-			var prop_id = $(e).data("id");
-			google.maps.event.trigger(markers[prop_id], "onblur");
-		}
-		window.clearOverlays = function () {
-			for (var key in markers) {
-				markers[key].setMap(null);
+			window.htmlContent = function (data) {
+				var content = document.getElementById('mapop').innerHTML;
+				var $html = $(content);
+				var $img = $html.find('img.featured');
+				var $title = $html.find('.prop-title');
+				var $priceRange = $html.find('.price-range');
+
+				$title.text(data.address).attr('href','#'+data.mapAddress);
+				$priceRange.text(data.priceRange);
+				$img.attr('src',data.thumb);
+
+				var $propertyWrap = $html.find('#loc-list');
+				var $properties = $html.find('#loc-list li').clone();
+
+				$html.find('#loc-list li').remove();
+
+				$.each(data.apartments, function(i,data){
+					var apartment = $properties.clone();
+					apartment.find('a').attr('href',data.url);
+					apartment.find('.thumb').attr('src',data.thumb)
+					apartment.find('.price').text(data.price)
+					apartment.find('.title').text(data.title)
+					$propertyWrap.append(apartment);
+				});
+
+				return $html[0];
 			}
-			markers = {};
-		}
-		window.addHtmlMarker = function(location) {
-			var g_lat = location.lat
-			var g_long = location.lng
-			var prop_id = location.id
-			var address = location.address
-			var marker;
-
-			marker = new google.maps.Marker({
-				position: new google.maps.LatLng(g_lat, g_long),
-				map: map,
-				icon: markerIcon,
-				label: {
-					text: address,
-					color: "#fff",
-					fontSize: "0px",
-					fontWeight: "bold"
+			window.propertyMouseover = function (e) {
+				var prop_id = e.id;
+				google.maps.event.trigger(markers[prop_id], "dblclick");
+			}
+			window.propertyMouseout = function (e) {
+				var prop_id = e.id;
+				google.maps.event.trigger(markers[prop_id], "mouseout");
+			}
+			window.propertyDirection = function (e) {
+				var prop_id = $(e).data("id");
+				google.maps.event.trigger(markers[prop_id], "onblur");
+			}
+			window.clearOverlays = function () {
+				for (var key in markers) {
+					markers[key].setMap(null);
 				}
-			});
-			marker[address] = marker;
-			bounds.extend(marker.position);
-			google.maps.event.addListener(marker, 'mouseover', (function (marker) {
-				return function () {
-					marker.setIcon(markerIcon);
-					infowindow.setContent(htmlContent(location));
+				markers = {};
+			}
+			window.addHtmlMarker = function(location) {
+				var g_lat = location.lat
+				var g_long = location.lng
+				var prop_id = location.id
+				var address = location.address
+				var marker;
+
+				marker = new google.maps.Marker({
+					position: new google.maps.LatLng(g_lat, g_long),
+					map: map,
+					icon: markerIcon,
+					label: {
+						text: address,
+						color: "#fff",
+						fontSize: "0px",
+						fontWeight: "bold"
+					}
+				});
+				marker[address] = marker;
+				bounds.extend(marker.position);
+				google.maps.event.addListener(marker, 'mouseover', (function (marker) {
+					return function () {
+						marker.setIcon(markerIcon);
+						infowindow.setContent(htmlContent(location));
+						infowindow.open(map, marker);
+						$('.markers_infowindow').closest('.gm-style-iw').parent().addClass('custom-iw');
+					}
+				})(marker));
+				google.maps.event.addListener(marker, 'mouseout', (function (marker) {
+					return function () {
+						marker.setIcon(markerIcon);
+					}
+				})(marker));
+				google.maps.event.addListener(marker, 'dblclick', (function (marker) {
+					return function () {
+						marker.setIcon(markerIcon);
+						infowindow.close();
+					}
+				})(marker));
+				google.maps.event.addListener(marker, 'onblur', (function (marker) {
+					return function () {
+						time_distance(marker);
+						infowindow.close();
+					}
+				})(marker));
+				google.maps.event.addListener(map, 'click', (function (marker) {
+					return function () {
+						marker.setIcon(markerIcon);
+						infowindow.close();
+					}
+				})(marker));
+				marker.addListener('mouseover', function () {
 					infowindow.open(map, marker);
-					$('.markers_infowindow').closest('.gm-style-iw').parent().addClass('custom-iw');
-				}
-			})(marker));
-			google.maps.event.addListener(marker, 'mouseout', (function (marker) {
-				return function () {
-					marker.setIcon(markerIcon);
-				}
-			})(marker));
-			google.maps.event.addListener(marker, 'dblclick', (function (marker) {
-				return function () {
-					marker.setIcon(markerIcon);
-					infowindow.close();
-				}
-			})(marker));
-			google.maps.event.addListener(marker, 'onblur', (function (marker) {
-				return function () {
-					time_distance(marker);
-					infowindow.close();
-				}
-			})(marker));
-			google.maps.event.addListener(map, 'click', (function (marker) {
-				return function () {
-					marker.setIcon(markerIcon);
-					infowindow.close();
-				}
-			})(marker));
-			marker.addListener('mouseover', function () {
-				infowindow.open(map, marker);
+				});
+			}
+
+			var bounds = new google.maps.LatLngBounds();
+			$.each(locations, function (i, item) {
+				addHtmlMarker(item)
 			});
+			map.fitBounds(bounds);
 		}
+	</script>
 
-		var bounds = new google.maps.LatLngBounds();
-		$.each(locations, function (i, item) {
-			addHtmlMarker(item)
-		});
-		map.fitBounds(bounds);
-	}
-</script>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxwPVD6tCrXE9q1qQ889-9VUDkKMGMGn4&callback=initMap"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxwPVD6tCrXE9q1qQ889-9VUDkKMGMGn4&callback=initMap"></script>
+*/ ?>
 
 <?php wp_reset_query(); ?>

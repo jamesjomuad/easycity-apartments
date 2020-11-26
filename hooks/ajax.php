@@ -1,25 +1,13 @@
 <?php
 #
-# Ajax
+#   Ajax Registration
+#   Add Ajax using $this->ajax('name',function)
 #
-add_ajax('load_apartments',function(){
-    $paged = $_POST['page'];
-    $args = [];
-    $args['post_type'] = 'apartment';
-    $args['paged'] = $paged;
 
-    // Filter
-    if( isset($_POST['filter']) ){
-        $meta_query = ['relation' => 'OR'];
-        foreach($_POST['filter'] as $k=>$filter){
-            array_push($meta_query,[
-                'key'     => $k,
-                'value'   => $filter,
-                'compare' => 'LIKE',
-            ]);
-        }
-        $args['meta_query'] = $meta_query;
-    }
 
-    view('apartment-loop',['query' => new WP_Query($args)]);
-});
+#
+#   Apartment Listing
+#
+$this->ajax('apartment_list',"ListingController@index");
+
+$this->ajax('test',"TestController");

@@ -1,6 +1,7 @@
 <?php
 
-class EasyCity{
+class EasyCity
+{
 
     public $version = "2.0.0";
     public $plugin_name;
@@ -117,6 +118,12 @@ class EasyCity{
         }, 11);
     }
 
+    public function action($name, $callback, int $priority = 10, int $accepted_args = 1)
+    {
+        add_action( $name, $callback, $priority, $accepted_args);
+        return $this;
+    }
+
     # Register CSS
     public function registerCss($name, $cssPath)
     {
@@ -173,6 +180,35 @@ class EasyCity{
         return $this;
     }
 
+    public function ajax($name, $callback)
+    {
+        if(is_callable($callback))
+        {
+            add_ajax($name, $callback);
+        }
+        else if( is_string($callback) && strpos($callback, '@') !== false )
+        {
+            $classMethod = explode('@',$callback); 
+            $class       = $classMethod[0];
+            $method      = $classMethod[1];
+
+            require_once $this->plugin_dir . "/controllers/{$class}.php";
+
+            add_ajax($name, function() use($callback, $class, $method) {
+
+                $class = (new $class())->$method();
+
+                if(is_array($class))
+                {
+                    echo json_encode($class);
+                    die;
+                }
+            });
+        }
+
+        return $this;
+    }
+
     public function run()
     {
         $this->load_css();
@@ -182,6 +218,15 @@ class EasyCity{
         $this->load_hooks();
 
         $this->init_register();
+
+        return $this;
+    }
+
+    public function init()
+    {
+        add_action('init', function(){
+            $this->run();
+        });
 
         return $this;
     }
