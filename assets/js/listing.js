@@ -29,7 +29,9 @@
             out: {
                 required: true
             }
-        }
+        },
+        dateIn: null,
+        dateOut: null
     }
 
     let self = $.search;
@@ -124,6 +126,7 @@
 
     self.onSearch = function(e){
         e.preventDefault();
+        console.log($(this))
         var Search = $.search;
         if(Search.form.valid()){
             $('#loader').data('page',1);
@@ -143,11 +146,11 @@
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
         Search.filter = false;
         Search.ul.html(Search.list)
-        Search.loader.show();
-        Search.get();
     }
 
     self.onReady = function(){
+        var Search = $.search;
+
         // Infinite load
         $('#loader button').on('click',function(){
             $('#loader').find('.loading').show();
@@ -188,6 +191,12 @@
             displayMode: 'default'
         });
 
+        Search.dateIn = datepicker[0];
+        Search.dateOut = datepicker[1];
+        
+        Search.dateIn.minDate = new Date;
+        Search.dateOut.minDate = new Date;
+
         $('#checkIn').on('click',function(){
             datepicker[1].hide()
         });
@@ -198,6 +207,7 @@
             datepicker[0].hide()
             datepicker[1].hide()
         });
+        
     }
 
     self.loader = {
