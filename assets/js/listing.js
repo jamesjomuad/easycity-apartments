@@ -126,12 +126,16 @@
 
     self.onSearch = function(e){
         e.preventDefault();
-        console.log($(this))
         var Search = $.search;
         if(Search.form.valid()){
+            if(Search.filter==false){
+                Search.list = Search.ul.find('li').remove();
+            }
+            else{
+                Search.ul.find('li').remove();
+            }
             $('#loader').data('page',1);
             Search.filter = true;
-            Search.list = Search.ul.find('li').remove();
             Search.loader.show();
             Search.get();
         }
@@ -146,6 +150,7 @@
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
         Search.filter = false;
         Search.ul.html(Search.list)
+        Search.loader.show();
     }
 
     self.onReady = function(){

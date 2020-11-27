@@ -27,23 +27,36 @@ class ListingController
         
         $meta_query = ['relation' => 'OR'];
 
+        array_push($meta_query,[
+            'key'     => 'availability',
+            'value'   => [
+                Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d") . ' 00:00:00',
+                Carbon\Carbon::parse(input('filter.out'))->format("Y-m-d") . ' 00:00:00'
+            ],
+            'compare' => 'BETWEEN',
+            'type'    => 'DATE'
+        ]);
+
+        return $meta_query;
+    }
+
+    private function filterQuery_old()
+    {   
+        $input = array_filter( input('filter') );
+        
+        $meta_query = ['relation' => 'OR'];
+
         foreach($input as $k=>$filter)
         {
-            if($k=='in')
+            if($k=='in' OR $k=='out')
             {
                 array_push($meta_query,[
                     'key'     => 'availability',
-                    'value'   => Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d"),
-                    'compare' => '>=',
-                    'type'    => 'DATE'
-                ]);
-            }
-            else if($k=='out')
-            {
-                array_push($meta_query,[
-                    'key'     => 'availability',
-                    'value'   => Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d"),
-                    'compare' => '<=',
+                    'value'   => [
+                        Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d"),
+                        Carbon\Carbon::parse(input('filter.out'))->format("Y-m-d")
+                    ],
+                    'compare' => 'BETWEEN',
                     'type'    => 'DATE'
                 ]);
             }
