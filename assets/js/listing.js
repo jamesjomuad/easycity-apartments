@@ -149,15 +149,11 @@
 
     self.onClear = function(){
         var Search = $.search;
-        if(Search.filter==false){
-            Search.filter = false;
-            return;
-        }
         $('#loader').data('page',1)
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
         Search.filter = false;
         Search.ul.html(Search.list)
-        Search.loader.hide();
+        Search.loader.show();
         Search.list.find('a.v-hide').on('scrollSpy:enter',function(){
             $(this).removeClass('v-hide')
             $(this).addClass('v-show')
