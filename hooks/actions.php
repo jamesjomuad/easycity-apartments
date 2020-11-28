@@ -103,6 +103,19 @@ $this->action('init',function(){
         sort($uniq);
         return $uniq;
     }
+
+    function get_max_price()
+    {
+        $result = get_posts(array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'apartment'
+        ));
+        $prices = array_map(function($post){
+            return get_field('price',$post->ID);
+        },$result);
+        sort($prices);
+        return (int)max($prices);
+    }
 });
 
 $this->action( 'pre_get_posts', function( $query ) {

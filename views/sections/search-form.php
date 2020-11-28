@@ -125,7 +125,14 @@
                 <div class="field">
                     <label class="label">
                         Price: 
-                        <input name="price_range" type="text" id="amount" readonly style="border:0;color: #F44932;font-weight:bold;background:none;">
+                        <input 
+                            name="price_range" 
+                            type="text" 
+                            id="amount" 
+                            data-max="<?php echo get_max_price(); ?>"
+                            readonly 
+                            style="border:0;color: #F44932;font-weight:bold;background:none;"
+                        >
                     </label>
                     <div class="control is-expanded">
                         <div class="is-fullwidth">
