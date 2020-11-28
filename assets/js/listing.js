@@ -15,7 +15,6 @@
         return o;
     };
 
-
     $.search = {
         name: "Search listing filter",
         version: '1.0.0',
@@ -46,7 +45,7 @@
 
         // Search Form submit
         this.form.on('submit', this.onSearch);
-    
+
         // Clear
         $('#ec-clear').on('click', this.onClear);
 
@@ -67,7 +66,7 @@
         var paged    = $loader.data('page');
         var nextPage = parseInt(paged) + 1;
         var request  = null;
-        
+
         if( !$this.isLoading() ){
             $this.loading = true;
             $this.loader.show()
@@ -75,7 +74,9 @@
             if(this.filter){
                 filter = {filter:this.form.serializeObject()}
             }
+
             request = $.extend({ page: paged, action: 'apartment_list', }, filter || {});
+
             $.ajax({
                 url: '/wp-admin/admin-ajax.php',
                 type: 'POST',
@@ -89,18 +90,13 @@
                     var lists = $(response.html);
                     var anchor = lists.find('a').addClass('v-hide');
 
-                    if(response.html==''){ 
-                        $('#loader #ajax-message').show().text('Not Found!')
+                    if(response.html=='' && !$this.filter){
+                        $('#loader #ajax-message').show().text('Not Found!');
+                        $this.loader.hide()
                     }else if($this.filter){
                         $('#loader #ajax-message').hide();
                         $('#loader').data( 'page', nextPage )
                         $('.apartment_list ul').append(lists);
-
-                        // Domino show effect
-                        anchor.on('scrollSpy:enter',function(){
-                            $(this).removeClass('v-hide')
-                            $(this).addClass('v-show')
-                        }).scrollSpy();
 
                         if(lists.length<=response.per_page){
                             $this.loader.hide()
@@ -109,17 +105,16 @@
                         $('#loader #ajax-message').hide();
                         $('#loader').data( 'page', nextPage )
                         $('.apartment_list ul').append(lists);
-
-                        anchor.on('scrollSpy:enter',function(){
-                            $(this).removeClass('v-hide')
-                            $(this).addClass('v-show')
-                        }).scrollSpy();
+                        $this.loader.show();
                     }
 
+                    // Domino show effect
+                    anchor.on('scrollSpy:enter',function(){
+                        $(this).removeClass('v-hide')
+                        $(this).addClass('v-show')
+                    }).scrollSpy();
+
                     $this.loading = false;
-                },
-                complete: function(){
-                    $this.loader.hide()
                 }
             });
         }
@@ -152,13 +147,13 @@
         $('#loader').data('page',1)
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
         Search.filter = false;
-        Search.ul.html(Search.list)
+        Search.ul.html(Search.list);
         Search.loader.show();
         Search.list.find('a.v-hide').on('scrollSpy:enter',function(){
             $(this).removeClass('v-hide')
             $(this).addClass('v-show')
         }).scrollSpy();
-        Search.initInfinite()
+        Search.initInfinite();
     }
 
     self.onReady = function(){
