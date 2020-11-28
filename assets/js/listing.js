@@ -182,8 +182,8 @@
         $( "#slider-range" ).slider({
             range: true,
             min: 0,
-            max: 1000,
-            values: [ 0, 1000 ],
+            max: 3000,
+            values: [ 0, 3000 ],
             slide: function( event, ui ) {
                 $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
             }
@@ -216,7 +216,7 @@
             datepicker[0].hide()
             datepicker[1].hide()
         });
-        
+
     }
 
     self.loader = {
