@@ -17,7 +17,7 @@ class ListingController
         return [
             'per_page' => get_option( 'posts_per_page' ),
             'html'     => view('apartment-loop',['query' => new WP_Query($args)])->get(),
-            'args'     => $args
+            // 'args'     => $args
         ];
     }
 

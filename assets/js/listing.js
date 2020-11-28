@@ -31,7 +31,9 @@
             }
         },
         dateIn: null,
-        dateOut: null
+        dateOut: null,
+        loader: $('#loader .loading'),
+        loading: false
     }
 
     let self = $.search;
@@ -51,6 +53,14 @@
         $this.form.validate({ rules: $this.rules });
     }
 
+    self.initInfinite = function(){
+        var $this = this;
+        $('#loader .loading').on('scrollSpy:enter', function() {
+            $this.get()
+        }).scrollSpy();
+        return this;
+    }
+
     self.get = function(filter){
         var $this    = this;
         var $loader  = $('#loader');
@@ -58,28 +68,30 @@
         var nextPage = parseInt(paged) + 1;
         var request  = null;
         
-        if( $loader.data('status')!="loading" ){
+        if( !$this.isLoading() ){
+            $this.loading = true;
+            $this.loader.show()
+
             if(this.filter){
                 filter = {filter:this.form.serializeObject()}
             }
-
             request = $.extend({ page: paged, action: 'apartment_list', }, filter || {});
-
             $.ajax({
                 url: '/wp-admin/admin-ajax.php',
                 type: 'POST',
                 dataType: 'json',
                 data: request,
                 error: function(response){
-                    $loader.find('.loading').hide();
                     $loader.find('button').show();
                     $loader.data('status', false);
                 },
                 success: function(response){
-                    if($this.filter){
-                        var lists = $(response.html);
-                        var anchor = lists.find('a').addClass('v-hide');
+                    var lists = $(response.html);
+                    var anchor = lists.find('a').addClass('v-hide');
 
+                    if(response.html==''){ 
+                        $('#loader #ajax-message').show().text('Not Found!')
+                    }else if($this.filter){
                         $('#loader #ajax-message').hide();
                         $('#loader').data( 'page', nextPage )
                         $('.apartment_list ul').append(lists);
@@ -90,39 +102,34 @@
                             $(this).addClass('v-show')
                         }).scrollSpy();
 
-                        $loader.data('status', false);
                         if(lists.length<=response.per_page){
                             $this.loader.hide()
                         }
                     }else{
+                        $('#loader #ajax-message').hide();
+                        $('#loader').data( 'page', nextPage )
+                        $('.apartment_list ul').append(lists);
 
-                        if(response==''){
-                            $('#loader .loading').hide()
-                            $('#loader #ajax-message').show().text('Not Found!')
-                        } else {
-                            var lists = $(response.html);
-                            var anchor = lists.find('a').addClass('v-hide');
-
-                            $('#loader #ajax-message').hide();
-                            $('#loader').data( 'page', nextPage )
-                            $('.apartment_list ul').append(lists);
-
-                            anchor.on('scrollSpy:enter',function(){
-                                $(this).removeClass('v-hide')
-                                $(this).addClass('v-show')
-                            }).scrollSpy();
-                        }
-                        $loader.data('status', false);
-
+                        anchor.on('scrollSpy:enter',function(){
+                            $(this).removeClass('v-hide')
+                            $(this).addClass('v-show')
+                        }).scrollSpy();
                     }
+
+                    $this.loading = false;
+                },
+                complete: function(){
+                    $this.loader.hide()
                 }
             });
-            
-            $loader.data('status','loading');
         }
 
         return this;
     };
+
+    self.isLoading = function(){
+        return this.loading===true;
+    }
 
     self.onSearch = function(e){
         e.preventDefault();
@@ -136,21 +143,26 @@
             }
             $('#loader').data('page',1);
             Search.filter = true;
-            Search.loader.show();
             Search.get();
         }
     }
 
     self.onClear = function(){
         var Search = $.search;
-        if(Search.filter==false)
-        return;
-
+        if(Search.filter==false){
+            Search.filter = false;
+            return;
+        }
         $('#loader').data('page',1)
         $(this).closest('form').find("input[type=text], select").not('#amount').val("");
         Search.filter = false;
         Search.ul.html(Search.list)
-        Search.loader.show();
+        Search.loader.hide();
+        Search.list.find('a.v-hide').on('scrollSpy:enter',function(){
+            $(this).removeClass('v-hide')
+            $(this).addClass('v-show')
+        }).scrollSpy();
+        Search.initInfinite()
     }
 
     self.onReady = function(){
@@ -158,17 +170,15 @@
 
         // Infinite load
         $('#loader button').on('click',function(){
-            $('#loader').find('.loading').show();
+            Search.loader.show();
             $('#loader').find('button').hide();
             setTimeout(function(){
                 $.search.get()
             }, 3000);
         });
 
-        // Init ScrollSpy
-        $('#loader .loading').on('scrollSpy:enter', function() {
-            $.search.get()
-        }).scrollSpy();
+        // Init Infinite listener
+        Search.initInfinite()
 
         $("#map").sticky({ topSpacing: 0 });
 
