@@ -170,7 +170,7 @@ $this->action('wp_enqueue_scripts', function(){
 },99);
 
 
-$this->action(isset($_GET['debug'])?'init':'xxxx', function(){
+$this->action(isset($_GET['update_field'])?'init':'xxxx', function(){
 
     $posts = get_posts(array(
         'numberposts'	=> -1,
