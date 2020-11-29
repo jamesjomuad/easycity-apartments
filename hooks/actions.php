@@ -116,6 +116,21 @@ $this->action('init',function(){
         sort($prices);
         return (int)max($prices);
     }
+
+    function get_rooms()
+    {
+        $result = get_posts(array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'apartment'
+        ));
+        $baths = array_map(function($post){
+            return get_field('baths',$post->ID);
+        },$result);
+        $baths = array_unique($baths);
+        sort($baths);
+        return $baths;
+    }
+
 });
 
 $this->action( 'pre_get_posts', function( $query ) {
@@ -153,3 +168,26 @@ $this->action('wp_enqueue_scripts', function(){
     wp_enqueue_script('ec_single');
   }
 },99);
+
+
+$this->action(isset($_GET['debug'])?'init':'xxxx', function(){
+
+    $posts = get_posts(array(
+        'numberposts'	=> -1,
+        'post_type'		=> 'apartment'
+    ));
+    
+    foreach($posts as $post)
+    {
+        $id = $post->ID;
+        $date = get_field('availability',$id);
+        $date = DateTime::createFromFormat('d/m/Y', $date);
+        $date = $date->format('Ymd');
+
+        dump(
+            update_field('availability', $date, $id)
+        );  
+    }
+
+    dd();
+});

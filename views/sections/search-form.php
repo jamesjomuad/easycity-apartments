@@ -72,7 +72,7 @@
             <!-- column -->
             <div class="column is-2">
                 <div class="field">
-                    <label class="label">Room</label>
+                    <label class="label">Rooms</label>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
                             <select name="room">
@@ -106,15 +106,14 @@
             <!-- column -->
             <div class="column is-2">
                 <div class="field">
-                    <label class="label">Bath</label>
+                    <label class="label">Baths</label>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
-                            <select name="bath">
+                            <select name="baths">
                                 <option value="">Select Bath</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                <?php foreach(get_rooms() as $room) : ?>
+                                    <option value="<?php echo $room; ?>"><?php echo $room; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>

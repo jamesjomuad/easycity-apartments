@@ -64,10 +64,10 @@ class ListingController
         ]);
 
         // Number of Baths
-        if(input('filter.bath'))
+        if(input('filter.baths'))
         array_push($meta_query,[
-            'key'     => 'bath',
-            'value'   => input('filter.bath'),
+            'key'     => 'baths',
+            'value'   => input('filter.baths'),
             'compare' => '=',
         ]);
 
