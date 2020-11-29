@@ -154,6 +154,8 @@
             $(this).addClass('v-show')
         }).scrollSpy();
         Search.initInfinite();
+        $( "#slider-range" ).slider("values", 0, 0);
+        $( "#slider-range" ).slider("values", 1, $('#amount').data('max'));
     }
 
     self.onReady = function(){
