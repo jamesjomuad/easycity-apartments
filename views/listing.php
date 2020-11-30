@@ -33,7 +33,6 @@
 
 <?php view()->partial('map-popup');  ?>
 
-<?php /*
 	<script>
 		function initMap(){
 			var locations = <?php echo json_encode(get_apartments_by_location()) ?>;
@@ -158,6 +157,5 @@
 	</script>
 
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxwPVD6tCrXE9q1qQ889-9VUDkKMGMGn4&callback=initMap"></script>
-*/ ?>
 
 <?php wp_reset_query(); ?>

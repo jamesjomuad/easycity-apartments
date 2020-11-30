@@ -1,9 +1,13 @@
 <?php
 
+
+
 class ListingController 
 {
+
     public function index()
     {
+
         $args               = [];
         $args['post_type']  = 'apartment';
         $args['paged']      = input('page');
@@ -25,7 +29,6 @@ class ListingController
     private function filterQuery()
     {
         $input = array_filter( input('filter') );
-        
         $meta_query = ['relation' => "AND"];
 
         // Date IN & OUT
@@ -40,11 +43,11 @@ class ListingController
         ]);
 
         // Location
-        if(input('filter.address'))
+        if(input('filter.neighbourhood'))
         array_push($meta_query,[
-            'key'     => 'address',
-            'value'   => input('filter.address'),
-            'compare' => 'LIKE',
+            'key'     => 'Neighbourhood',
+            'value'   => input('filter.neighbourhood'),
+            'compare' => 'LIKE'
         ]);
 
         // Number of Rooms
@@ -78,43 +81,13 @@ class ListingController
             $priceRange[0] = filter_var($priceRange[0], FILTER_SANITIZE_NUMBER_INT);
             $priceRange[1] = filter_var($priceRange[1], FILTER_SANITIZE_NUMBER_INT);
 
-            array_push($meta_query,[
-                'key'     => 'price',
-                'value'   => $priceRange,
-                'compare' => 'BETWEEN',
-                'type' => 'NUMERIC'
-            ]);
-        }
-
-        return $meta_query;
-    }
-
-    private function filterQuery_old()
-    {   
-        $input = array_filter( input('filter') );
-        
-        $meta_query = ['relation' => 'OR'];
-
-        foreach($input as $k=>$filter)
-        {
-            if($k=='in' OR $k=='out')
+            if($priceRange[1] !=get_max_price())
             {
                 array_push($meta_query,[
-                    'key'     => 'availability',
-                    'value'   => [
-                        Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d"),
-                        Carbon\Carbon::parse(input('filter.out'))->format("Y-m-d")
-                    ],
+                    'key'     => 'price',
+                    'value'   => $priceRange,
                     'compare' => 'BETWEEN',
-                    'type'    => 'DATE'
-                ]);
-            }
-            else
-            {
-                array_push($meta_query,[
-                    'key'     => $k,
-                    'value'   => $filter,
-                    'compare' => 'LIKE',
+                    'type' => 'NUMERIC'
                 ]);
             }
         }
