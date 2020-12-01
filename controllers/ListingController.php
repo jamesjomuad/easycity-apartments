@@ -32,13 +32,11 @@ class ListingController
         $meta_query = ['relation' => "AND"];
 
         // Date IN & OUT
+        if(input('filter.in'))
         array_push($meta_query,[
             'key'     => 'availability',
-            'value'   => [
-                Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d") . ' 00:00:00',
-                Carbon\Carbon::parse(input('filter.out'))->format("Y-m-d") . ' 00:00:00'
-            ],
-            'compare' => 'BETWEEN',
+            'value'   => Carbon\Carbon::parse(input('filter.in'))->format("Y-m-d") . ' 00:00:00',
+            'compare' => '>=',
             'type'    => 'DATE'
         ]);
 

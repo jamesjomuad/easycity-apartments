@@ -49,7 +49,7 @@
         // Clear
         $('#ec-clear').on('click', this.onClear);
 
-        $this.form.validate({ rules: $this.rules });
+        // $this.form.validate({ rules: $this.rules });
     }
 
     self.initInfinite = function(){
@@ -90,22 +90,31 @@
                     var lists = $(response.html);
                     var anchor = lists.find('a').addClass('v-hide');
 
-                    if(response.html=='' && !$this.filter){
-                        $('#loader #ajax-message').show().text('Not Found!');
-                        $this.loader.hide()
-                    }else if($this.filter){
-                        $('#loader #ajax-message').hide();
-                        $('#loader').data( 'page', nextPage )
-                        $('.apartment_list ul').append(lists);
+                    if($this.filter){
+                        if(response.html==''){
+                            var message = 'Not Found!';
+                            if($('#checkIn').val()!=''){message='No Room Available During Your Booking Duration';}
+                            $('#loader #ajax-message').show().text(message);
+                            $this.loader.hide()
+                        }else{
+                            $('#loader #ajax-message').hide();
+                            $('#loader').data( 'page', nextPage )
+                            $('.apartment_list ul').append(lists);
+                        }
 
                         if(lists.length<=response.per_page){
                             $this.loader.hide()
                         }
                     }else{
-                        $('#loader #ajax-message').hide();
-                        $('#loader').data( 'page', nextPage )
-                        $('.apartment_list ul').append(lists);
-                        $this.loader.show();
+                        if(response.html==''){
+                            $('#loader #ajax-message').show().text('Not Found!');
+                            $this.loader.hide()
+                        }else{
+                            $('#loader #ajax-message').hide();
+                            $('#loader').data( 'page', nextPage )
+                            $('.apartment_list ul').append(lists);
+                            $this.loader.show();
+                        }
                     }
 
                     // Domino show effect
@@ -129,17 +138,15 @@
     self.onSearch = function(e){
         e.preventDefault();
         var Search = $.search;
-        if(Search.form.valid()){
-            if(Search.filter==false){
-                Search.list = Search.ul.find('li').remove();
-            }
-            else{
-                Search.ul.find('li').remove();
-            }
-            $('#loader').data('page',1);
-            Search.filter = true;
-            Search.get();
+        if(Search.filter==false){
+            Search.list = Search.ul.find('li').remove();
         }
+        else{
+            Search.ul.find('li').remove();
+        }
+        $('#loader').data('page',1);
+        Search.filter = true;
+        Search.get();
     }
 
     self.onClear = function(){
@@ -200,23 +207,24 @@
         });
 
         Search.dateIn = datepicker[0];
-        Search.dateOut = datepicker[1];
+        // Search.dateOut = datepicker[1];
         
         Search.dateIn.minDate = new Date;
-        Search.dateOut.minDate = new Date;
+        // Search.dateOut.minDate = new Date;
 
         /* Fixed form issue */
         Search.form.find('.datepicker button').not('[type="button"]').attr('type','button');
 
-        $('#checkIn').on('click',function(){
-            datepicker[1].hide()
-        });
-        $('#checkOut').on('click',function(){
-            datepicker[0].hide()
-        });
+        // BulmaCalendar extra actions
+        // $('#checkIn').on('click',function(){
+        //     datepicker[1].hide()
+        // });
+        // $('#checkOut').on('click',function(){
+        //     datepicker[0].hide()
+        // });
         $('body').on('click',function(){
             datepicker[0].hide()
-            datepicker[1].hide()
+            // datepicker[1].hide()
         });
 
     }

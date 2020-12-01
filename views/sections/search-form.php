@@ -2,7 +2,7 @@
     <div class="container-fluid has-background-white box p-5 mb-6">
         <div class="columns is-desktop">
             <!-- column -->
-            <div class="column is-2">
+            <div class="column is-3">
                 <div class="field">
                     <label class="label">Neighbourhood</label>
                     <div class="control is-expanded">
@@ -41,7 +41,7 @@
             </div>
 
             <!-- column -->
-            <div class="column is-3">
+            <!-- <div class="column is-3">
                 <div class="field">
                     <label class="label">Check Out</label>
                     <p class="control has-icons-left">
@@ -51,7 +51,7 @@
                         </span>
                     </p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- colum -->
             <div class="column">
