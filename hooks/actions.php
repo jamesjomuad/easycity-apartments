@@ -168,33 +168,3 @@ $this->action('wp_enqueue_scripts', function(){
     wp_enqueue_script('ec_single');
   }
 },99);
-
-
-$this->action(isset($_GET['update_field'])?'init':'xxxx', function(){
-
-    $posts = get_posts(array(
-        'numberposts'	=> -1,
-        'post_type'		=> 'apartment'
-    ));
-    
-    $tmp = [];
-
-    foreach($posts as $post)
-    {
-        $id = $post->ID;
-        $date = get_field('availability',$id);
-
-        if(DateTime::createFromFormat('F j, Y', $date) !== false)
-        {
-            $date = DateTime::createFromFormat('F j, Y', $date);
-            $date = $date->format('Ymd');
-            $tmp[$id] = $date;
-            // dump(
-            //     update_field('availability', $date, $id)
-            // );
-        }
-        
-    }
-
-    dd($tmp);
-});
